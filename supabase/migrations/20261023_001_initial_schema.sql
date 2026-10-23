@@ -146,8 +146,12 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-  IF OLD.role IS DISTINCT FROM NEW.role AND NOT is_admin() THEN
-    RAISE EXCEPTION 'Access Denied: Only administrators can modify user roles.';
+  -- Only enforce when called by an authenticated user client (auth.uid() is not null)
+  -- Allows database administrators, SQL Editor, and service role to manage roles
+  IF auth.uid() IS NOT NULL THEN
+    IF OLD.role IS DISTINCT FROM NEW.role AND NOT is_admin() THEN
+      RAISE EXCEPTION 'Access Denied: Only administrators can modify user roles.';
+    END IF;
   END IF;
   NEW.updated_at = now();
   RETURN NEW;
