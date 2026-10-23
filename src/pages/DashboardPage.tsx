@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { 
   Users, 
   CalendarClock, 
@@ -8,334 +9,441 @@ import {
   ArrowUpRight, 
   ArrowRight,
   PhoneCall, 
-  BookOpen,
-  Filter
+  BookOpen, 
+  Plus,
+  RefreshCw,
+  Compass
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { fetchDashboardMetrics, DashboardMetrics } from '../services/dashboardService'
+import { useLeadModal } from '../context/useLeadModal'
+import '../features/dashboard/dashboard.css'
 
 export const DashboardPage: React.FC = () => {
-  return (
-    <div className="container-fluid" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      
-      {/* Executive Header with Campus Context */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-brand-600)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Spring 2026 Admissions
-            </span>
-            <span style={{ color: 'var(--slate-300)' }}>•</span>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Updated 2 mins ago</span>
+  const { openCreateLeadModal } = useLeadModal()
+  const [nowMs] = useState(() => Date.now())
+  const [metrics, setMetrics] = useState<DashboardMetrics | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [timeRange, setTimeRange] = useState<'month' | '30days' | 'all'>('month')
+
+  useEffect(() => {
+    let isCancelled = false
+    fetchDashboardMetrics().then((res) => {
+      if (!isCancelled) {
+        if (res.data) setMetrics(res.data)
+        if (res.error) setError(res.error)
+        setLoading(false)
+      }
+    })
+
+    return () => {
+      isCancelled = true
+    }
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="container-fluid dashboard-container">
+        <div style={{ textAlign: 'center', padding: '4rem 1rem', color: '#94a3b8' }}>
+          <Clock size={28} className="spin" style={{ color: '#60a5fa', margin: '0 auto 0.75rem auto' }} />
+          <div style={{ fontSize: '0.9rem', color: '#f8fafc', fontWeight: 600 }}>
+            Reconciling Admissions Intelligence...
           </div>
-          <h1 style={{ fontSize: '1.35rem', fontWeight: 700, color: 'var(--slate-900)', letterSpacing: '-0.02em' }}>
-            Admissions Pipeline & Conversion
-          </h1>
+          <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.25rem' }}>
+            Aggregating student pipeline, conversion ratios, and callback queues
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error || !metrics) {
+    return (
+      <div className="container-fluid dashboard-container">
+        <div className="dashboard-section-card" style={{ maxWidth: '500px', margin: '2rem auto', textAlign: 'center' }}>
+          <AlertCircle size={32} style={{ color: '#f87171', margin: '0 auto' }} />
+          <h2 style={{ fontSize: '1rem', color: '#f8fafc', margin: 0 }}>Metrics Reconciliation Error</h2>
+          <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0 }}>
+            {error || 'Failed to aggregate CRM metrics from the database.'}
+          </p>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => window.location.reload()}
+            style={{ margin: '0.5rem auto 0 auto', width: 'fit-content' }}
+          >
+            <RefreshCw size={13} />
+            <span>Retry Connection</span>
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="container-fluid dashboard-container">
+      {/* Executive Header */}
+      <div className="dashboard-header">
+        <div className="dashboard-title-group">
+          <div className="dashboard-campus-pill">
+            <Compass size={13} />
+            <span>Bangalore South Center • Spring 2026 Admissions</span>
+          </div>
+          <h1 className="dashboard-title">Admissions Pipeline & Conversion</h1>
         </div>
 
-        {/* Segmented Controls for Range */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <div className="segmented-control">
-            <button type="button" className="segmented-item active">This Month</button>
-            <button type="button" className="segmented-item">Last 30 Days</button>
-            <button type="button" className="segmented-item">All Time</button>
+        {/* Range Selector & Action CTAs */}
+        <div className="dashboard-header-actions">
+          <div className="segmented-control" style={{ backgroundColor: '#090d16' }}>
+            <button
+              type="button"
+              className={`segmented-item ${timeRange === 'month' ? 'active' : ''}`}
+              onClick={() => setTimeRange('month')}
+            >
+              This Month
+            </button>
+            <button
+              type="button"
+              className={`segmented-item ${timeRange === '30days' ? 'active' : ''}`}
+              onClick={() => setTimeRange('30days')}
+            >
+              Last 30 Days
+            </button>
+            <button
+              type="button"
+              className={`segmented-item ${timeRange === 'all' ? 'active' : ''}`}
+              onClick={() => setTimeRange('all')}
+            >
+              All Time
+            </button>
           </div>
-          <button type="button" className="btn btn-secondary" style={{ padding: '0.35rem 0.65rem' }}>
-            <Filter size={14} />
-            <span>Bangalore South</span>
+
+          <button
+            type="button"
+            className="btn btn-primary interactive-press"
+            onClick={() => openCreateLeadModal()}
+          >
+            <Plus size={14} />
+            <span>New Enquiry</span>
           </button>
         </div>
       </div>
 
-      {/* Urgent Overdue Callout (Subtle, sleek, non-AI) */}
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'space-between',
-        padding: '0.75rem 1rem', 
-        backgroundColor: '#fff1f2', 
-        border: '1px solid #fecdd3', 
-        borderRadius: 'var(--radius-md)',
-        fontSize: '0.8125rem'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', color: '#9f1239' }}>
-          <AlertCircle size={16} style={{ flexShrink: 0 }} />
-          <span>
-            <strong>Attention:</strong> 4 high-intent student enquiries have overdue follow-up calls scheduled for today.
-          </span>
+      {/* Urgent Overdue Callout Banner */}
+      {metrics.overdueFollowUpsCount > 0 && (
+        <div className="dashboard-alert-banner animate-slide-down">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <AlertCircle size={16} style={{ flexShrink: 0, color: '#f87171' }} />
+            <span>
+              <strong>Action Required:</strong> {metrics.overdueFollowUpsCount} student enquiries have overdue callback consultations waiting in the queue.
+            </span>
+          </div>
+          <Link to="/follow-ups" className="dashboard-alert-link">
+            <span>Review Queue</span>
+            <ArrowRight size={13} />
+          </Link>
         </div>
-        <Link to="/follow-ups" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', color: '#be123c', fontWeight: 600, textDecoration: 'underline' }}>
-          Review Queue <ArrowRight size={13} />
-        </Link>
-      </div>
+      )}
 
-      {/* High-End Linear-style KPI Metric Cards */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', 
-        gap: '1rem' 
-      }}>
-        {/* Card 1 */}
-        <div className="card-elevated" style={{ padding: '1.25rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--slate-500)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Total Active Enquiries
-            </span>
-            <span style={{ color: 'var(--slate-400)' }}><Users size={16} /></span>
+      {/* 4 Executive KPI Cards */}
+      <div className="dashboard-kpi-grid">
+        {/* Total Active Leads */}
+        <div className="dashboard-kpi-card">
+          <div className="dashboard-kpi-top">
+            <span className="dashboard-kpi-label">Total Enquiries</span>
+            <span className="dashboard-kpi-icon"><Users size={16} /></span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.65rem', marginBottom: '0.35rem' }}>
-            <span className="tabular-nums" style={{ fontSize: '1.85rem', fontWeight: 700, color: 'var(--slate-900)' }}>148</span>
-            <span style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              fontSize: '0.75rem', 
-              fontWeight: 600, 
-              color: 'var(--semantic-emerald)',
-              backgroundColor: 'var(--semantic-emerald-bg)',
-              padding: '1px 5px',
-              borderRadius: 'var(--radius-xs)'
-            }}>
-              <ArrowUpRight size={12} /> 14.2%
-            </span>
+          <div className="dashboard-kpi-value-row">
+            <span className="dashboard-kpi-value">{metrics.totalLeads}</span>
+            {metrics.newThisWeekCount > 0 && (
+              <span className="dashboard-kpi-badge success">
+                <ArrowUpRight size={12} />
+                <span>+{metrics.newThisWeekCount} this week</span>
+              </span>
+            )}
           </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>
-            86 walk-in, 62 digital enquiries
-          </p>
+          <div className="dashboard-kpi-footer">
+            {metrics.convertedLeadsCount} enrolled • {metrics.qualifiedLeadsCount} high intent
+          </div>
         </div>
 
-        {/* Card 2 */}
-        <div className="card-elevated" style={{ padding: '1.25rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--slate-500)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              New Today
-            </span>
-            <span style={{ color: 'var(--slate-400)' }}><Clock size={16} /></span>
+        {/* New Leads */}
+        <div className="dashboard-kpi-card">
+          <div className="dashboard-kpi-top">
+            <span className="dashboard-kpi-label">New Untouched</span>
+            <span className="dashboard-kpi-icon"><Clock size={16} /></span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.65rem', marginBottom: '0.35rem' }}>
-            <span className="tabular-nums" style={{ fontSize: '1.85rem', fontWeight: 700, color: 'var(--slate-900)' }}>12</span>
-            <span style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              fontSize: '0.75rem', 
-              fontWeight: 600, 
-              color: 'var(--color-brand-600)',
-              backgroundColor: '#eff6ff',
-              padding: '1px 5px',
-              borderRadius: 'var(--radius-xs)'
-            }}>
-              +4 this morning
+          <div className="dashboard-kpi-value-row">
+            <span className="dashboard-kpi-value">{metrics.newLeadsCount}</span>
+            <span className="dashboard-kpi-badge info">
+              <span>Fresh</span>
             </span>
           </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>
-            Awaiting initial counselling call
-          </p>
+          <div className="dashboard-kpi-footer">
+            Awaiting first counsellor outreach call
+          </div>
         </div>
 
-        {/* Card 3 */}
-        <div className="card-elevated" style={{ padding: '1.25rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--slate-500)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Overdue Follow-ups
-            </span>
-            <span style={{ color: 'var(--slate-400)' }}><CalendarClock size={16} /></span>
+        {/* Overdue Follow-ups */}
+        <div className="dashboard-kpi-card">
+          <div className="dashboard-kpi-top">
+            <span className="dashboard-kpi-label">Pending Callbacks</span>
+            <span className="dashboard-kpi-icon"><CalendarClock size={16} /></span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.65rem', marginBottom: '0.35rem' }}>
-            <span className="tabular-nums" style={{ fontSize: '1.85rem', fontWeight: 700, color: '#be123c' }}>4</span>
-            <span style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              fontSize: '0.75rem', 
-              fontWeight: 600, 
-              color: '#be123c',
-              backgroundColor: '#fff1f2',
-              padding: '1px 5px',
-              borderRadius: 'var(--radius-xs)'
-            }}>
-              Urgent
+          <div className="dashboard-kpi-value-row">
+            <span className="dashboard-kpi-value" style={{ color: metrics.overdueFollowUpsCount > 0 ? '#f87171' : '#f8fafc' }}>
+              {metrics.overdueFollowUpsCount}
             </span>
+            {metrics.overdueFollowUpsCount > 0 ? (
+              <span className="dashboard-kpi-badge alert">Urgent</span>
+            ) : (
+              <span className="dashboard-kpi-badge success">On Schedule</span>
+            )}
           </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>
-            Average delay: 1.8 hrs
-          </p>
+          <div className="dashboard-kpi-footer">
+            {metrics.todayFollowUpsCount} scheduled for today
+          </div>
         </div>
 
-        {/* Card 4 */}
-        <div className="card-elevated" style={{ padding: '1.25rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--slate-500)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Enrollment Rate
-            </span>
-            <span style={{ color: 'var(--slate-400)' }}><TrendingUp size={16} /></span>
+        {/* Enrollment Conversion Rate */}
+        <div className="dashboard-kpi-card">
+          <div className="dashboard-kpi-top">
+            <span className="dashboard-kpi-label">Conversion Rate</span>
+            <span className="dashboard-kpi-icon"><TrendingUp size={16} /></span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.65rem', marginBottom: '0.35rem' }}>
-            <span className="tabular-nums" style={{ fontSize: '1.85rem', fontWeight: 700, color: 'var(--slate-900)' }}>25.0%</span>
-            <span style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              fontSize: '0.75rem', 
-              fontWeight: 600, 
-              color: 'var(--semantic-emerald)',
-              backgroundColor: 'var(--semantic-emerald-bg)',
-              padding: '1px 5px',
-              borderRadius: 'var(--radius-xs)'
-            }}>
-              <ArrowUpRight size={12} /> +3.2%
+          <div className="dashboard-kpi-value-row">
+            <span className="dashboard-kpi-value">{metrics.conversionRate}%</span>
+            <span className="dashboard-kpi-badge success">
+              <ArrowUpRight size={12} /> Verified
             </span>
           </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>
-            37 enrolled out of 148 qualified
-          </p>
+          <div className="dashboard-kpi-footer">
+            {metrics.convertedLeadsCount} admissions out of {metrics.totalLeads} total leads
+          </div>
         </div>
       </div>
 
-      {/* Two-Column Operational Section */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '1.25rem' }}>
-        
-        {/* Left: Urgent Student Action Queue */}
-        <div className="card-elevated" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <div>
-              <h2 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--slate-900)' }}>Priority Follow-up Queue</h2>
-              <p style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>Urgent calls assigned to your shift</p>
+      {/* Pipeline Stage Funnel Strip */}
+      <div className="dashboard-funnel-card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h2 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#f8fafc', margin: 0 }}>
+              Pipeline Stage Conversion Funnel
+            </h2>
+            <p style={{ fontSize: '0.725rem', color: '#94a3b8', margin: '2px 0 0 0' }}>
+              Distribution of prospective students across admission stages
+            </p>
+          </div>
+          <Link to="/leads" className="btn btn-ghost" style={{ fontSize: '0.75rem', padding: '0.25rem 0.55rem' }}>
+            Manage Leads →
+          </Link>
+        </div>
+
+        {/* Segmented Track */}
+        <div className="funnel-segments-track">
+          {metrics.statusDistribution.map((item) => (
+            <div
+              key={item.status}
+              className="funnel-segment"
+              style={{
+                width: `${Math.max(item.percentage, item.count > 0 ? 3 : 0)}%`,
+                backgroundColor: item.color,
+              }}
+              title={`${item.status}: ${item.count} (${item.percentage}%)`}
+            />
+          ))}
+        </div>
+
+        {/* Legend */}
+        <div className="funnel-legend">
+          {metrics.statusDistribution.map((item) => (
+            <div key={item.status} className="funnel-legend-item">
+              <span className="funnel-legend-dot" style={{ backgroundColor: item.color }} />
+              <span>
+                <strong>{item.status}:</strong> {item.count} ({item.percentage}%)
+              </span>
             </div>
-            <Link to="/follow-ups" className="btn btn-secondary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}>
-              View All (4)
+          ))}
+        </div>
+      </div>
+
+      {/* Two-Column Operational Layout */}
+      <div className="dashboard-two-col">
+        {/* Left: Priority Follow-up Queue */}
+        <div className="dashboard-section-card">
+          <div className="dashboard-section-header">
+            <div>
+              <h2 className="dashboard-section-title">Priority Follow-up Queue</h2>
+              <p className="dashboard-section-sub">Callbacks requiring immediate counsellor action</p>
+            </div>
+            <Link to="/follow-ups" className="btn btn-secondary" style={{ fontSize: '0.725rem', padding: '0.25rem 0.55rem' }}>
+              View Queue
             </Link>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', flex: 1 }}>
-            {/* Student 1 */}
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'space-between', 
-              padding: '0.65rem 0.75rem', 
-              backgroundColor: 'var(--slate-50)', 
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-default)'
-            }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--slate-900)' }}>Aarav Sharma</span>
-                  <span className="badge-dot qualified"><span className="dot" />Qualified</span>
-                </div>
-                <div style={{ fontSize: '0.725rem', color: 'var(--slate-500)', marginTop: '2px' }}>
-                  IIT-JEE 2-Yr Intensive • Parent requested fee concession
-                </div>
-              </div>
-              <button type="button" className="btn btn-primary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.725rem' }}>
-                <PhoneCall size={12} /> Call
-              </button>
+          {metrics.priorityFollowUps.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '2rem 1rem', color: '#64748b', fontSize: '0.8rem' }}>
+              No urgent callbacks pending! All students are currently up to date.
             </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {metrics.priorityFollowUps.map((task) => {
+                const phone = task.lead?.phone || ''
+                const studentName = task.lead?.full_name || 'Prospective Student'
+                const isOverdue = new Date(task.due_at).getTime() < nowMs
 
-            {/* Student 2 */}
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'space-between', 
-              padding: '0.65rem 0.75rem', 
-              backgroundColor: 'var(--slate-50)', 
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-default)'
-            }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--slate-900)' }}>Diya Patel</span>
-                  <span className="badge-dot contacted"><span className="dot" />Contacted</span>
-                </div>
-                <div style={{ fontSize: '0.725rem', color: 'var(--slate-500)', marginTop: '2px' }}>
-                  NEET Medical Repeater • Wants Saturday Physics demo link
-                </div>
-              </div>
-              <button type="button" className="btn btn-secondary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.725rem' }}>
-                <Clock size={12} /> Reschedule
-              </button>
-            </div>
+                return (
+                  <div
+                    key={task.id}
+                    className={`priority-task-item ${isOverdue ? 'is-overdue' : ''}`}
+                  >
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem', minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                        <Link
+                          to={`/leads/${task.lead_id}`}
+                          style={{ fontSize: '0.825rem', fontWeight: 600, color: '#f8fafc', textDecoration: 'none' }}
+                        >
+                          {studentName}
+                        </Link>
+                        {isOverdue && <span className="overdue-tag">Overdue</span>}
+                      </div>
 
-            {/* Student 3 */}
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'space-between', 
-              padding: '0.65rem 0.75rem', 
-              backgroundColor: 'var(--slate-50)', 
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-default)'
-            }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--slate-900)' }}>Rohan Mehta</span>
-                  <span className="badge-dot new"><span className="dot" />New Enquiry</span>
-                </div>
-                <div style={{ fontSize: '0.725rem', color: 'var(--slate-500)', marginTop: '2px' }}>
-                  SAT & GRE Global Track • Walk-in consultation enquiry
-                </div>
-              </div>
-              <button type="button" className="btn btn-primary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.725rem' }}>
-                <PhoneCall size={12} /> Call
-              </button>
+                      <div style={{ fontSize: '0.75rem', color: '#94a3b8', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                        "{task.note}"
+                      </div>
+
+                      <div style={{ fontSize: '0.7rem', color: '#64748b' }}>
+                        ⏰ Due: {new Date(task.due_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })} • Counsellor: {task.assignee?.full_name || 'Unassigned'}
+                      </div>
+                    </div>
+
+                    {phone && (
+                      <a
+                        href={`tel:${phone}`}
+                        className="btn btn-secondary interactive-press"
+                        style={{ padding: '0.3rem 0.6rem', fontSize: '0.725rem', gap: '0.3rem', color: '#60a5fa', textDecoration: 'none' }}
+                      >
+                        <PhoneCall size={12} />
+                        <span>Call</span>
+                      </a>
+                    )}
+                  </div>
+                )
+              })}
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Right: Academic Course Conversion Funnel */}
-        <div className="card-elevated" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        {/* Right: Academic Course Intake */}
+        <div className="dashboard-section-card">
+          <div className="dashboard-section-header">
             <div>
-              <h2 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--slate-900)' }}>Course Program Intake</h2>
-              <p style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>Active lead volume by academic stream</p>
+              <h2 className="dashboard-section-title">Program Intake Ratios</h2>
+              <p className="dashboard-section-sub">Lead volume and admission conversions by course</p>
             </div>
-            <span style={{ color: 'var(--slate-400)' }}><BookOpen size={16} /></span>
+            <BookOpen size={16} style={{ color: '#64748b' }} />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-            {/* Track 1 */}
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
-                <span style={{ fontWeight: 600, color: 'var(--slate-800)' }}>IIT-JEE Engineering (2-Year)</span>
-                <span className="tabular-nums" style={{ color: 'var(--slate-600)', fontSize: '0.75rem' }}>46 enquiries (16 enrolled • 34%)</span>
-              </div>
-              <div style={{ height: '6px', width: '100%', backgroundColor: 'var(--slate-100)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
-                <div style={{ width: '34%', height: '100%', backgroundColor: 'var(--color-brand-600)', borderRadius: 'var(--radius-full)' }} />
-              </div>
-            </div>
+            {metrics.courseTrackDistribution.map((track, idx) => {
+              const colors = ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b', '#ec4899']
+              const color = colors[idx % colors.length]
 
-            {/* Track 2 */}
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
-                <span style={{ fontWeight: 600, color: 'var(--slate-800)' }}>NEET Medical Foundation</span>
-                <span className="tabular-nums" style={{ color: 'var(--slate-600)', fontSize: '0.75rem' }}>42 enquiries (12 enrolled • 28%)</span>
-              </div>
-              <div style={{ height: '6px', width: '100%', backgroundColor: 'var(--slate-100)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
-                <div style={{ width: '28%', height: '100%', backgroundColor: '#059669', borderRadius: 'var(--radius-full)' }} />
-              </div>
-            </div>
-
-            {/* Track 3 */}
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
-                <span style={{ fontWeight: 600, color: 'var(--slate-800)' }}>SAT & GRE Global Admissions</span>
-                <span className="tabular-nums" style={{ color: 'var(--slate-600)', fontSize: '0.75rem' }}>36 enquiries (8 enrolled • 22%)</span>
-              </div>
-              <div style={{ height: '6px', width: '100%', backgroundColor: 'var(--slate-100)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
-                <div style={{ width: '22%', height: '100%', backgroundColor: '#7c3aed', borderRadius: 'var(--radius-full)' }} />
-              </div>
-            </div>
-
-            {/* Track 4 */}
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginBottom: '4px' }}>
-                <span style={{ fontWeight: 600, color: 'var(--slate-800)' }}>Class 11-12 Integrated CBSE</span>
-                <span className="tabular-nums" style={{ color: 'var(--slate-600)', fontSize: '0.75rem' }}>24 enquiries (1 enrolled • 4%)</span>
-              </div>
-              <div style={{ height: '6px', width: '100%', backgroundColor: 'var(--slate-100)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
-                <div style={{ width: '4%', height: '100%', backgroundColor: '#d97706', borderRadius: 'var(--radius-full)' }} />
-              </div>
-            </div>
+              return (
+                <div key={track.course} className="course-track-row">
+                  <div className="course-track-top">
+                    <span style={{ fontWeight: 600, color: '#f1f5f9' }}>{track.course}</span>
+                    <span className="tabular-nums" style={{ color: '#94a3b8', fontSize: '0.75rem' }}>
+                      {track.enquiries} leads ({track.enrolled} enrolled • {track.conversionRate}%)
+                    </span>
+                  </div>
+                  <div className="course-track-bar">
+                    <div
+                      className="course-track-bar-fill"
+                      style={{
+                        width: `${Math.max(track.conversionRate, track.enrolled > 0 ? 5 : 0)}%`,
+                        backgroundColor: color,
+                      }}
+                    />
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
-
       </div>
 
+      {/* Bottom: Recent Student Enquiries Table */}
+      <div className="dashboard-section-card">
+        <div className="dashboard-section-header">
+          <div>
+            <h2 className="dashboard-section-title">Recent Student Enquiries</h2>
+            <p className="dashboard-section-sub">Newly registered prospective students</p>
+          </div>
+          <Link to="/leads" className="btn btn-secondary" style={{ fontSize: '0.725rem', padding: '0.25rem 0.55rem' }}>
+            All Leads ({metrics.totalLeads})
+          </Link>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          {metrics.recentLeads.map((lead) => {
+            const initials = lead.full_name
+              .split(' ')
+              .map((n) => n[0])
+              .join('')
+              .slice(0, 2)
+              .toUpperCase()
+
+            return (
+              <div
+                key={lead.id}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '0.65rem 0.85rem',
+                  backgroundColor: '#0d1527',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  borderRadius: '8px',
+                  flexWrap: 'wrap',
+                  gap: '0.75rem',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div className="student-avatar" style={{ width: 32, height: 32, fontSize: '0.75rem' }}>
+                    {initials}
+                  </div>
+                  <div>
+                    <Link
+                      to={`/leads/${lead.id}`}
+                      style={{ fontSize: '0.85rem', fontWeight: 600, color: '#f8fafc', textDecoration: 'none' }}
+                    >
+                      {lead.full_name}
+                    </Link>
+                    <div style={{ fontSize: '0.725rem', color: '#94a3b8' }}>
+                      {lead.course_interest} • Source: {lead.source}
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <span className={`status-pill status-${lead.status}`}>
+                    <span className="status-pill-dot" />
+                    {lead.status}
+                  </span>
+                  <Link
+                    to={`/leads/${lead.id}`}
+                    className="btn btn-ghost"
+                    style={{ fontSize: '0.725rem', padding: '0.2rem 0.5rem' }}
+                  >
+                    View Dossier →
+                  </Link>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,0 +1,305 @@
+/* ==========================================================================
+   BrightPath CRM — Executive Dashboard & Live Metric Reconciliation
+   Obsidian Dark Minimalist Palette (Attio / Linear Standard)
+   ========================================================================== */
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-bottom: 2.5rem;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dashboard-campus-pill {
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: #60a5fa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.dashboard-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.dashboard-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Overdue Urgent Banner */
+.dashboard-alert-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  color: #fca5a5;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.dashboard-alert-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #f87171;
+  font-weight: 600;
+  text-decoration: underline;
+  transition: opacity 0.15s ease;
+}
+
+.dashboard-alert-link:hover {
+  opacity: 0.8;
+}
+
+/* KPI Cards Grid */
+.dashboard-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.dashboard-kpi-card {
+  background-color: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.dashboard-kpi-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.dashboard-kpi-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.dashboard-kpi-label {
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dashboard-kpi-icon {
+  color: #64748b;
+}
+
+.dashboard-kpi-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+}
+
+.dashboard-kpi-value {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #f8fafc;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.dashboard-kpi-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.dashboard-kpi-badge.success {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.dashboard-kpi-badge.info {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.dashboard-kpi-badge.alert {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.dashboard-kpi-footer {
+  font-size: 0.725rem;
+  color: #64748b;
+  margin-top: 0.15rem;
+}
+
+/* Pipeline Stage Funnel Bar */
+.dashboard-funnel-card {
+  background-color: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.funnel-segments-track {
+  display: flex;
+  height: 10px;
+  width: 100%;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.funnel-segment {
+  height: 100%;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.funnel-legend {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.funnel-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+}
+
+.funnel-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Two Column Layout */
+.dashboard-two-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Priority Tasks & Recent Leads Lists */
+.dashboard-section-card {
+  background-color: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dashboard-section-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.dashboard-section-sub {
+  font-size: 0.725rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Priority Item Row */
+.priority-task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  background-color: #0d1527;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  gap: 0.75rem;
+  transition: border-color 0.15s ease;
+}
+
+.priority-task-item:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.priority-task-item.is-overdue {
+  border-left: 3px solid #ef4444;
+}
+
+/* Program Intake Progress Bar */
+.course-track-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.course-track-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.course-track-bar {
+  height: 6px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.course-track-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease;
+}
