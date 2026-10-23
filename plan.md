@@ -39,8 +39,8 @@ Every single feature phase follows this strict sequential cycle:
 
 | Phase | Feature Milestone | Status | Key Deliverables & Acceptance Criteria |
 | :---: | :--- | :---: | :--- |
-| **01** | **Foundation, TypeScript & High-End Startup UI Shell** | *REVISION IN REVIEW* | Transform shell into a 0% AI-generated, high-end startup product (Attio/Linear aesthetic): bespoke typography, layered slate surfaces, workspace switcher, grouped sidebar with live count pills, command search (`⌘K`), realistic academy domain data, and tactile micro-interactions. |
-| **02** | **Supabase Client & Config Diagnostics** | *Pending* | Setup `@supabase/supabase-js`, `.env.example`, safe singleton client in `lib/supabaseClient.ts`, missing-credentials warning banner. |
+| **01** | **Foundation, TypeScript & High-End Startup UI Shell** | **COMPLETED** | Transformed shell into a 0% AI-generated, tier-1 startup product (Attio/Linear aesthetic): bespoke typography, layered slate surfaces, workspace switcher, grouped sidebar with live count pills, command search (`⌘K`), realistic academy domain data, and tactile micro-interactions. (Commit: `a1e4fca`) |
+| **02** | **Supabase Client & Config Diagnostics** | *NEXT* | Setup `@supabase/supabase-js`, `.env.example`, safe singleton client in `lib/supabaseClient.ts`, missing-credentials warning banner. |
 | **03** | **PostgreSQL Schema, Migrations & RLS** | *Pending* | Database DDL for `profiles`, `leads`, `follow_ups`, `activities`. Triggers on `auth.users`, RLS policies per role, seed demo data script. |
 | **04** | **Authentication & Role-Based Lifecycle** | *Pending* | Supabase Auth (Sign In, Sign Up, Sign Out), session persistence, `AuthContext`, role-guarded routes (`admin`, `manager`, `counsellor`). |
 | **05** | **Lead Creation & Validation (CRM Core I)** | *Pending* | Create lead modal, validation (name/phone required, email regex, whitespace trim), Supabase insert, activity log creation. |
