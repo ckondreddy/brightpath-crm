@@ -1,73 +1,95 @@
 :root {
-  /* Brand & Palette */
-  --color-navy-950: #0a0f1d;
-  --color-navy-900: #0f172a;
-  --color-navy-800: #1e293b;
-  --color-navy-700: #334155;
-  --color-navy-600: #475569;
-  
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-light: #eff6ff;
-  --color-primary-glow: rgba(37, 99, 235, 0.25);
-  
-  --color-accent-teal: #0d9488;
-  --color-accent-amber: #d97706;
-  --color-accent-rose: #e11d48;
-  
-  /* Status Colors */
-  --status-new-bg: #eff6ff;
-  --status-new-text: #1d4ed8;
-  --status-new-border: #bfdbfe;
-  
-  --status-contacted-bg: #f5f3ff;
-  --status-contacted-text: #6d28d9;
-  --status-contacted-border: #ddd6fe;
-  
-  --status-qualified-bg: #ecfdf5;
-  --status-qualified-text: #047857;
-  --status-qualified-border: #a7f3d0;
-  
-  --status-converted-bg: #f0fdf4;
-  --status-converted-text: #15803d;
-  --status-converted-border: #bbf7d0;
-  
-  --status-lost-bg: #fff1f2;
-  --status-lost-text: #be123c;
-  --status-lost-border: #fecdd3;
-  
-  /* Backgrounds & Surfaces */
+  /* High-End Startup Palette: Obsidian Slate & Precision Cobalt */
+  --color-obsidian-950: #070a11;
+  --color-obsidian-900: #0d121f;
+  --color-obsidian-850: #121829;
+  --color-obsidian-800: #1a233a;
+  --color-obsidian-700: #263352;
+  --color-obsidian-600: #3b4d75;
+
+  /* Neutral Slate Canvas (Linear / Attio style) */
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+
+  /* Surgical Brand Cobalt Accents */
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-500: #3b82f6;
+  --color-brand-50: #eff6ff;
+  --color-brand-tint: rgba(37, 99, 235, 0.06);
+  --color-brand-glow: rgba(37, 99, 235, 0.2);
+
+  /* Minimalist Semantic Accents (Muted & Professional) */
+  --semantic-emerald: #059669;
+  --semantic-emerald-bg: #ecfdf5;
+  --semantic-emerald-border: #a7f3d0;
+
+  --semantic-amber: #d97706;
+  --semantic-amber-bg: #fffbeb;
+  --semantic-amber-border: #fde68a;
+
+  --semantic-rose: #e11d48;
+  --semantic-rose-bg: #fff1f2;
+  --semantic-rose-border: #fecdd3;
+
+  --semantic-violet: #7c3aed;
+  --semantic-violet-bg: #f5f3ff;
+  --semantic-violet-border: #ddd6fe;
+
+  /* App Surfaces */
   --bg-app: #f8fafc;
   --bg-surface: #ffffff;
-  --bg-sidebar: #0f172a;
-  --bg-sidebar-hover: #1e293b;
-  --bg-sidebar-active: #2563eb;
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-subtle: #f8fafc;
   
+  /* Sidebar Specific Surfaces */
+  --sidebar-bg: var(--color-obsidian-900);
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-item-hover: rgba(255, 255, 255, 0.05);
+  --sidebar-item-active: rgba(37, 99, 235, 0.15);
+  --sidebar-text: #94a3b8;
+  --sidebar-text-active: #ffffff;
+
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --text-main: #0f172a;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
   --text-muted: #64748b;
-  --text-light: #94a3b8;
-  --text-inverse: #ffffff;
-  
-  /* Borders */
-  --border-light: #e2e8f0;
+  --text-tertiary: #94a3b8;
+
+  /* Borders & Dividers */
   --border-subtle: #f1f5f9;
+  --border-default: #e2e8f0;
+  --border-strong: #cbd5e1;
   --border-focus: #2563eb;
-  
+
+  /* Tactile Elevation & Micro-Bevels */
+  --shadow-xs: 0 1px 2px 0 rgba(16, 24, 40, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(16, 24, 40, 0.06), 0 1px 2px 0 rgba(16, 24, 40, 0.03);
+  --shadow-md: 0 4px 8px -2px rgba(16, 24, 40, 0.06), 0 2px 4px -2px rgba(16, 24, 40, 0.03);
+  --shadow-lg: 0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03);
+  --shadow-card: 0 1px 3px rgba(16, 24, 40, 0.05), 0 0 0 1px rgba(16, 24, 40, 0.06);
+  --shadow-card-hover: 0 4px 12px rgba(16, 24, 40, 0.08), 0 0 0 1px rgba(16, 24, 40, 0.08);
+
   /* Radii */
+  --radius-xs: 4px;
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  
+
   /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 120ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }

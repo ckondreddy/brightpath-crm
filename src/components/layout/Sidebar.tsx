@@ -7,6 +7,7 @@ import {
   BarChart3, 
   Settings, 
   GraduationCap,
+  ChevronDown,
   X 
 } from 'lucide-react'
 
@@ -16,14 +17,6 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-  const navItems = [
-    { label: 'Dashboard', path: '/', icon: LayoutDashboard },
-    { label: 'Leads', path: '/leads', icon: Users },
-    { label: 'Follow-ups', path: '/follow-ups', icon: CalendarClock },
-    { label: 'Reports', path: '/reports', icon: BarChart3 },
-    { label: 'Settings', path: '/settings', icon: Settings },
-  ]
-
   return (
     <>
       <div 
@@ -32,14 +25,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         aria-hidden="true"
       />
       <aside className={`app-sidebar ${isOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          <div className="brand-icon-wrapper">
-            <GraduationCap size={22} />
+        {/* Workspace Switcher */}
+        <div className="workspace-switcher" title="Switch Campus Branch">
+          <div className="workspace-icon">
+            <GraduationCap size={18} />
           </div>
-          <div className="brand-text">
-            <h1>BrightPath</h1>
-            <p>Academy CRM</p>
+          <div className="workspace-meta">
+            <span className="workspace-name">BrightPath Academy</span>
+            <span className="workspace-sub">Bangalore South Center</span>
           </div>
+          <ChevronDown size={14} className="workspace-chevron" />
           <button 
             type="button"
             className="mobile-menu-btn" 
@@ -47,31 +42,99 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             onClick={onClose}
             aria-label="Close sidebar"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
+        {/* Grouped Navigation */}
         <nav className="sidebar-nav">
-          {navItems.map((item) => {
-            const Icon = item.icon
-            return (
+          <div className="nav-group">
+            <div className="nav-group-title">Main Pipeline</div>
+            <div className="nav-group-items">
               <NavLink
-                key={item.path}
-                to={item.path}
+                to="/"
+                end
                 className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                 onClick={onClose}
-                end={item.path === '/'}
               >
-                <Icon size={18} />
-                <span>{item.label}</span>
+                <div className="nav-link-left">
+                  <LayoutDashboard size={16} />
+                  <span>Dashboard</span>
+                </div>
               </NavLink>
-            )
-          })}
+
+              <NavLink
+                to="/leads"
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                onClick={onClose}
+              >
+                <div className="nav-link-left">
+                  <Users size={16} />
+                  <span>Student Leads</span>
+                </div>
+                <span className="nav-pill">148</span>
+              </NavLink>
+
+              <NavLink
+                to="/follow-ups"
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                onClick={onClose}
+              >
+                <div className="nav-link-left">
+                  <CalendarClock size={16} />
+                  <span>Follow-ups</span>
+                </div>
+                <span className="nav-pill alert">4 due</span>
+              </NavLink>
+            </div>
+          </div>
+
+          <div className="nav-group">
+            <div className="nav-group-title">Intelligence & Growth</div>
+            <div className="nav-group-items">
+              <NavLink
+                to="/reports"
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                onClick={onClose}
+              >
+                <div className="nav-link-left">
+                  <BarChart3 size={16} />
+                  <span>Admissions Analytics</span>
+                </div>
+              </NavLink>
+            </div>
+          </div>
+
+          <div className="nav-group" style={{ marginTop: 'auto' }}>
+            <div className="nav-group-title">Configuration</div>
+            <div className="nav-group-items">
+              <NavLink
+                to="/settings"
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                onClick={onClose}
+              >
+                <div className="nav-link-left">
+                  <Settings size={16} />
+                  <span>Academy Settings</span>
+                </div>
+              </NavLink>
+            </div>
+          </div>
         </nav>
 
+        {/* Counsellor Shift Presence Footer */}
         <div className="sidebar-footer">
-          <span>BrightPath CRM v1.0</span>
-          <span>MVP Ready</span>
+          <div className="user-presence">
+            <div className="presence-avatar">
+              PS
+              <span className="presence-dot" title="Active on Duty" />
+            </div>
+            <div className="presence-info">
+              <span className="presence-name">Priya Sharma</span>
+              <span className="presence-role">Senior Counsellor</span>
+            </div>
+          </div>
+          <span style={{ fontSize: '0.65rem', color: '#64748b', fontFamily: 'var(--font-mono)' }}>v1.0</span>
         </div>
       </aside>
     </>
