@@ -39,8 +39,8 @@ Every single feature phase follows this strict sequential cycle:
 
 | Phase | Feature Milestone | Status | Key Deliverables & Acceptance Criteria |
 | :---: | :--- | :---: | :--- |
-| **01** | **Foundation, TypeScript & Responsive Shell** | **COMPLETED** | React 19 + TypeScript migration, design tokens in `tokens.css`, desktop sidebar & mobile drawer layout, placeholder page routing. (Commit: `823d375`) |
-| **02** | **Supabase Client & Config Diagnostics** | *NEXT* | Setup `@supabase/supabase-js`, `.env.example`, safe singleton client in `lib/supabaseClient.ts`, missing-credentials warning banner. |
+| **01** | **Foundation, TypeScript & High-End Startup UI Shell** | *REVISION IN REVIEW* | Transform shell into a 0% AI-generated, high-end startup product (Attio/Linear aesthetic): bespoke typography, layered slate surfaces, workspace switcher, grouped sidebar with live count pills, command search (`⌘K`), realistic academy domain data, and tactile micro-interactions. |
+| **02** | **Supabase Client & Config Diagnostics** | *Pending* | Setup `@supabase/supabase-js`, `.env.example`, safe singleton client in `lib/supabaseClient.ts`, missing-credentials warning banner. |
 | **03** | **PostgreSQL Schema, Migrations & RLS** | *Pending* | Database DDL for `profiles`, `leads`, `follow_ups`, `activities`. Triggers on `auth.users`, RLS policies per role, seed demo data script. |
 | **04** | **Authentication & Role-Based Lifecycle** | *Pending* | Supabase Auth (Sign In, Sign Up, Sign Out), session persistence, `AuthContext`, role-guarded routes (`admin`, `manager`, `counsellor`). |
 | **05** | **Lead Creation & Validation (CRM Core I)** | *Pending* | Create lead modal, validation (name/phone required, email regex, whitespace trim), Supabase insert, activity log creation. |
@@ -52,6 +52,36 @@ Every single feature phase follows this strict sequential cycle:
 | **11** | **Reports, Pipeline Analytics & CSV Export** | *Pending* | Conversion breakdown by source/counsellor, date-range filters, sanitized CSV lead export download. |
 | **12** | **Production Hardening, Accessibility & Polish** | *Pending* | Toast notification system, keyboard navigation & focus traps, WCAG AA contrast check, network disconnect/error handling. |
 | **13** | **End-to-End Verification, Handover & Documentation** | *Pending* | Full role regression testing pass, comprehensive `README.md` with SQL setup instructions, live Vercel production verification. |
+
+---
+
+## 3.1 Phase 01 Revision: High-End Startup Design System & "0% AI" Architecture
+
+To achieve a tier-1, high-end startup aesthetic (similar to **Attio**, **Linear**, **Stripe**, and **Folk CRM**) and eliminate any generic AI-generated feel, Phase 01 incorporates the following design standards:
+
+### 1. Eliminating the "Generic AI" Traps
+* **No clunky rainbow gradients**: Replaced with layered, high-contrast monochrome slate surfaces (`#090D16` deep navy, `#0F172A`, `#F8FAFC`, `#FFFFFF`) with intentional, surgical cobalt accents (`#2563EB`).
+* **No oversized icon boxes**: Icons are refined to 15px–18px stroke-width 1.75, integrated harmoniously into typography rather than placed inside massive neon squares.
+* **No cookie-cutter dummy text**: All page shells use authentic coaching institute context (e.g. *"IIT-JEE & NEET Fastrack 2026"*, *"SAT / GRE Admissions"*, *"Walk-in Bangalore Center"*, *"Counsellor Batch Shift: Morning"*).
+* **No floating generic cards**: Cards use crisp, physical 1px borders (`rgba(15, 23, 42, 0.08)`) with micro-bevel inset shadows (`box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 0 0 1px rgba(16, 24, 40, 0.04)`).
+
+### 2. High-End Startup Components to Implement
+* **Workspace Switcher in Sidebar**:
+  - `BrightPath Academy • Indiranagar Center` with a subtle verified green shield and dropdown chevron.
+* **Segmented Navigation with Live Metric Pills**:
+  - Grouped sections with micro-uppercase headers: `MAIN PIPELINE`, `STUDENT DIRECTORY`, `INTELLIGENCE`, `PREFERENCES`.
+  - Live count pills on navigation links (e.g. `Leads` with a subtle badge `148`, `Follow-ups` with an alert pill `4 overdue`).
+* **Command Bar & Global Quick Search (`⌘K`)**:
+  - Integrated header search bar with keyboard shortcut tag (`⌘K` / `Ctrl+K`).
+  - Action shortcut buttons (e.g. `+ New Lead`, `Quick Note`) with keyboard hints.
+* **Counsellor Live Shift Presence**:
+  - Avatar badge in header and sidebar footer with status dot (`🟢 On Duty • Priya Sharma - Senior Counsellor`).
+* **Executive Metric Cards**:
+  - Linear/Stripe-style typography with tabular numbers (`font-variant-numeric: tabular-nums`).
+  - Positive/negative delta badges (`↑ 12.4% vs last week`), subtle micro-sparkline indicators, and contextual comparative notes.
+* **Segmented View Switchers & Realistic Filter Bars**:
+  - Segmented pill controls (`All Enquiries`, `High Intent`, `Contacted`, `Admitted`).
+  - Tactile micro-buttons with physical press effect (`active: scale(0.98)`).
 
 ---
 
