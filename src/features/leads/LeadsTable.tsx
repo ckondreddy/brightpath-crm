@@ -8,6 +8,7 @@ import {
   Clock,
   User
 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { LeadWithRelations } from '../../services/leadService'
 import { LeadsSkeleton } from './LeadsSkeleton'
 import { LeadsEmptyState } from './LeadsEmptyState'
@@ -34,6 +35,7 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
   isFiltered,
   onResetFilters,
 }) => {
+  const navigate = useNavigate()
   const [nowMs] = React.useState(() => Date.now())
   const renderSortIcon = (column: 'created_at' | 'full_name' | 'status') => {
     if (sortBy !== column) {
@@ -140,7 +142,12 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                 const isOverdue = pendingFollowUp ? new Date(pendingFollowUp.due_at).getTime() < nowMs : false
 
                 return (
-                  <tr key={lead.id}>
+                  <tr 
+                    key={lead.id} 
+                    onClick={() => navigate(`/leads/${lead.id}`)}
+                    style={{ cursor: 'pointer' }}
+                    title={`Click to view ${lead.full_name}'s full profile & activity history`}
+                  >
                     {/* Student Name & Phone/Email */}
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>

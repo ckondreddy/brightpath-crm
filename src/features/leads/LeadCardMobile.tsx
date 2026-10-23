@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Phone, Calendar, Mail, User } from 'lucide-react'
 import { LeadWithRelations } from '../../services/leadService'
 
@@ -7,6 +8,7 @@ interface LeadCardMobileProps {
 }
 
 export const LeadCardMobile: React.FC<LeadCardMobileProps> = ({ lead }) => {
+  const navigate = useNavigate()
   const [nowMs] = React.useState(() => Date.now())
   const initials = lead.full_name
     .split(' ')
@@ -20,7 +22,11 @@ export const LeadCardMobile: React.FC<LeadCardMobileProps> = ({ lead }) => {
   const isOverdue = nextFollowUp ? new Date(nextFollowUp.due_at).getTime() < nowMs : false
 
   return (
-    <div className="lead-mobile-card">
+    <div 
+      className="lead-mobile-card" 
+      onClick={() => navigate(`/leads/${lead.id}`)}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="lead-mobile-top">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           <div className="student-avatar">{initials}</div>
@@ -43,6 +49,7 @@ export const LeadCardMobile: React.FC<LeadCardMobileProps> = ({ lead }) => {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.75rem', color: '#94a3b8' }}>
         <a 
           href={`tel:${lead.phone}`} 
+          onClick={(e) => e.stopPropagation()}
           style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#60a5fa', textDecoration: 'none' }}
         >
           <Phone size={12} />

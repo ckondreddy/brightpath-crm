@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabaseClient'
 import { Database } from '../types/database.types'
-import { Lead, LeadSource, LeadStatus, UserProfile } from '../types'
+import { Lead, LeadSource, LeadStatus, UserProfile, FollowUp } from '../types'
 
 type LeadInsert = Database['public']['Tables']['leads']['Insert']
 type ActivityInsert = Database['public']['Tables']['activities']['Insert']
@@ -13,6 +13,23 @@ export interface LeadWithRelations extends Lead {
     status: 'pending' | 'completed' | 'cancelled'
     note: string
   }[]
+}
+
+export interface ActivityWithActor {
+  id: string
+  lead_id: string
+  actor_id: string | null
+  activity_type: 'lead_created' | 'status_updated' | 'note_added' | 'follow_up_scheduled' | 'follow_up_completed' | 'lead_edited'
+  description: string
+  metadata?: Record<string, unknown> | null
+  created_at: string
+  actor?: UserProfile | null
+}
+
+export interface LeadDetailWithRelations extends LeadWithRelations {
+  creator?: UserProfile | null
+  follow_ups?: FollowUp[]
+  activities?: ActivityWithActor[]
 }
 
 export interface FetchLeadsOptions {
@@ -51,6 +68,16 @@ export interface CreateLeadInput {
   notes?: string
 }
 
+export interface UpdateLeadInput {
+  full_name: string
+  phone: string
+  email?: string | null
+  course_interest: string
+  source: LeadSource
+  assigned_to?: string | null
+  notes?: string | null
+}
+
 export interface LeadValidationErrors {
   full_name?: string
   phone?: string
@@ -61,9 +88,9 @@ export interface LeadValidationErrors {
 }
 
 /**
- * Validates lead creation inputs according to coaching CRM domain rules.
+ * Validates lead creation & editing inputs according to coaching CRM domain rules.
  */
-export function validateLeadInput(input: CreateLeadInput): LeadValidationErrors {
+export function validateLeadInput(input: CreateLeadInput | UpdateLeadInput): LeadValidationErrors {
   const errors: LeadValidationErrors = {}
 
   // 1. Full name validation (required, trimmed, min 2 chars)
@@ -113,12 +140,10 @@ export async function createLead(
   input: CreateLeadInput,
   currentUserId: string
 ): Promise<{ data: Lead | null; error: string | null }> {
-  // Guard: Ensure Supabase client is initialized
   if (!supabase) {
     return { data: null, error: 'Database client is not configured. Please check connection settings.' }
   }
 
-  // Validate inputs first
   const validationErrors = validateLeadInput(input)
   const firstErrorKey = Object.keys(validationErrors)[0] as keyof LeadValidationErrors | undefined
   if (firstErrorKey) {
@@ -138,7 +163,6 @@ export async function createLead(
       notes: input.notes?.trim() || null,
     }
 
-    // 1. Insert into public.leads
     const { data: leadData, error: leadError } = await supabase
       .from('leads')
       .insert(payload)
@@ -152,7 +176,6 @@ export async function createLead(
 
     const createdLead = leadData as Lead
 
-    // 2. Automatically log lead creation activity in public.activities
     const activityPayload: ActivityInsert = {
       lead_id: createdLead.id,
       actor_id: currentUserId || null,
@@ -232,22 +255,18 @@ export async function fetchLeads(options: FetchLeadsOptions = {}): Promise<Fetch
         { count: 'exact' }
       )
 
-    // 1. Status Filter
     if (status && status !== 'all') {
       query = query.eq('status', status)
     }
 
-    // 2. Source Filter
     if (source && source !== 'all') {
       query = query.eq('source', source)
     }
 
-    // 3. Assignee Filter
     if (assignedTo && assignedTo !== 'all') {
       query = query.eq('assigned_to', assignedTo)
     }
 
-    // 4. Search Filter (Debounced client-side, applied across student name, phone, email, course)
     if (searchQuery && searchQuery.trim()) {
       const sanitized = searchQuery.trim().replace(/[%_]/g, '')
       if (sanitized) {
@@ -257,10 +276,8 @@ export async function fetchLeads(options: FetchLeadsOptions = {}): Promise<Fetch
       }
     }
 
-    // 5. Sorting
     query = query.order(sortBy, { ascending: sortOrder === 'asc' })
 
-    // 6. Range Pagination
     const from = (page - 1) * pageSize
     const to = from + pageSize - 1
     query = query.range(from, to)
@@ -319,5 +336,165 @@ export async function fetchLeadStatusCounts(): Promise<LeadStatusCounts> {
   } catch (err) {
     console.error('Failed to retrieve status counts:', err)
     return defaultCounts
+  }
+}
+
+/**
+ * Fetches complete details of a single lead including creator, assignee, follow-ups, and audit activities.
+ */
+export async function fetchLeadById(
+  id: string
+): Promise<{ data: LeadDetailWithRelations | null; error: string | null }> {
+  if (!supabase) {
+    return { data: null, error: 'Database client is not configured.' }
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('leads')
+      .select(
+        '*, assignee:profiles!leads_assigned_to_fkey(id, full_name, role), creator:profiles!leads_created_by_fkey(id, full_name, role), follow_ups(*), activities(*, actor:profiles(id, full_name, role))'
+      )
+      .eq('id', id)
+      .order('created_at', { referencedTable: 'activities', ascending: false })
+      .order('due_at', { referencedTable: 'follow_ups', ascending: true })
+      .single()
+
+    if (error) {
+      console.error('Failed to fetch lead by ID:', error)
+      return { data: null, error: error.message }
+    }
+
+    return { data: data as unknown as LeadDetailWithRelations, error: null }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to retrieve enquiry details.'
+    return { data: null, error: message }
+  }
+}
+
+/**
+ * Updates lead pipeline status with mandatory lost reason enforcement and audit logging.
+ */
+export async function updateLeadStatus(
+  leadId: string,
+  newStatus: LeadStatus,
+  lostReason: string | null,
+  currentUserId: string,
+  oldStatus: LeadStatus
+): Promise<{ data: Lead | null; error: string | null }> {
+  if (!supabase) {
+    return { data: null, error: 'Database client is not configured.' }
+  }
+
+  // Strict validation: if marking as Lost, lost_reason is mandatory
+  if (newStatus === 'Lost' && (!lostReason || !lostReason.trim())) {
+    return { data: null, error: 'A reason is required when marking an enquiry as Lost.' }
+  }
+
+  try {
+    const updatePayload = {
+      status: newStatus,
+      lost_reason: newStatus === 'Lost' ? lostReason?.trim() : null,
+      updated_at: new Date().toISOString(),
+    }
+
+    const { data: leadData, error: updateError } = await supabase
+      .from('leads')
+      .update(updatePayload)
+      .eq('id', leadId)
+      .select()
+      .single()
+
+    if (updateError) {
+      console.error('Failed to update lead status:', updateError)
+      return { data: null, error: updateError.message }
+    }
+
+    // Automatically record activity log
+    const description =
+      newStatus === 'Lost'
+        ? `Enquiry marked as Lost: ${lostReason?.trim()}`
+        : `Stage progressed from ${oldStatus} to ${newStatus}`
+
+    const activityPayload: ActivityInsert = {
+      lead_id: leadId,
+      actor_id: currentUserId || null,
+      activity_type: 'status_updated',
+      description,
+      metadata: {
+        old_status: oldStatus,
+        new_status: newStatus,
+        lost_reason: newStatus === 'Lost' ? lostReason?.trim() : null,
+      },
+    }
+
+    await supabase.from('activities').insert(activityPayload)
+
+    return { data: leadData as Lead, error: null }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to update lead status.'
+    return { data: null, error: message }
+  }
+}
+
+/**
+ * Updates student contact, program, and counsellor details with audit logging.
+ */
+export async function updateLeadDetails(
+  leadId: string,
+  input: UpdateLeadInput,
+  currentUserId: string
+): Promise<{ data: Lead | null; error: string | null }> {
+  if (!supabase) {
+    return { data: null, error: 'Database client is not configured.' }
+  }
+
+  const validationErrors = validateLeadInput(input)
+  const firstErrorKey = Object.keys(validationErrors)[0] as keyof LeadValidationErrors | undefined
+  if (firstErrorKey) {
+    return { data: null, error: validationErrors[firstErrorKey] || 'Validation failed.' }
+  }
+
+  try {
+    const updatePayload = {
+      full_name: input.full_name.trim(),
+      phone: input.phone.trim(),
+      email: input.email?.trim() || null,
+      course_interest: input.course_interest.trim(),
+      source: input.source,
+      assigned_to: input.assigned_to || null,
+      notes: input.notes?.trim() || null,
+      updated_at: new Date().toISOString(),
+    }
+
+    const { data: leadData, error: updateError } = await supabase
+      .from('leads')
+      .update(updatePayload)
+      .eq('id', leadId)
+      .select()
+      .single()
+
+    if (updateError) {
+      console.error('Failed to update lead details:', updateError)
+      return { data: null, error: updateError.message }
+    }
+
+    const activityPayload: ActivityInsert = {
+      lead_id: leadId,
+      actor_id: currentUserId || null,
+      activity_type: 'lead_edited',
+      description: `Student details updated (${input.full_name}, ${input.course_interest})`,
+      metadata: {
+        course_interest: input.course_interest,
+        assigned_to: input.assigned_to,
+      },
+    }
+
+    await supabase.from('activities').insert(activityPayload)
+
+    return { data: leadData as Lead, error: null }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to update lead details.'
+    return { data: null, error: message }
   }
 }
