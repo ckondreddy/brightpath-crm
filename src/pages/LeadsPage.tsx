@@ -9,9 +9,11 @@ import {
   Calendar,
   Sparkles
 } from 'lucide-react'
+import { useLeadModal } from '../context/useLeadModal'
 
 export const LeadsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'high_intent' | 'demo' | 'enrolled'>('all')
+  const { openCreateLeadModal } = useLeadModal()
 
   const sampleLeads = [
     {
@@ -108,7 +110,11 @@ export const LeadsPage: React.FC = () => {
             <Download size={14} />
             <span>Export CSV</span>
           </button>
-          <button type="button" className="btn btn-primary">
+          <button 
+            type="button" 
+            className="btn btn-primary"
+            onClick={() => openCreateLeadModal()}
+          >
             <Plus size={14} />
             <span>New Student Enquiry</span>
           </button>

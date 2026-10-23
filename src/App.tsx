@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { LeadModalProvider } from './context/LeadModalContext'
 import { ProtectedRoute } from './components/common/ProtectedRoute'
 import { AppLayout } from './components/layout/AppLayout'
 import { AuthPage } from './features/auth/AuthPage'
@@ -14,7 +15,8 @@ import { NotFoundPage } from './pages/NotFoundPage'
 export const App: React.FC = () => {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <LeadModalProvider>
+        <BrowserRouter>
         <Routes>
           {/* Public Authentication Route */}
           <Route path="/login" element={<AuthPage />} />
@@ -37,6 +39,7 @@ export const App: React.FC = () => {
           </Route>
         </Routes>
       </BrowserRouter>
+      </LeadModalProvider>
     </AuthProvider>
   )
 }

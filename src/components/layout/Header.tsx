@@ -3,6 +3,7 @@ import { Menu, Search, Plus, Bell, LogOut, User as UserIcon } from 'lucide-react
 import { Link } from 'react-router-dom'
 import { ConnectionStatusBadge } from '../common/ConnectionStatusBadge'
 import { useAuth } from '../../context/useAuth'
+import { useLeadModal } from '../../context/useLeadModal'
 
 interface HeaderProps {
   onToggleSidebar: () => void
@@ -11,9 +12,33 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onOpenConfig }) => {
   const { user, profile, signOut } = useAuth()
+  const { openCreateLeadModal } = useLeadModal()
 
   const displayName = profile?.full_name || user?.email?.split('@')[0] || 'Staff'
   const displayRole = profile?.role || 'counsellor'
+
+  // Global keyboard shortcut: Press 'N' to open New Enquiry modal
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null
+      const isInput = target && (
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'SELECT' ||
+        target.isContentEditable
+      )
+
+      if (isInput) return
+
+      if ((e.key === 'n' || e.key === 'N') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        e.preventDefault()
+        openCreateLeadModal()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [openCreateLeadModal])
 
   return (
     <header className="app-header">
@@ -45,11 +70,16 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onOpenConfig })
         <ConnectionStatusBadge onOpenConfig={onOpenConfig} />
 
         {/* Quick Action: New Enquiry Button */}
-        <Link to="/leads" className="btn btn-primary interactive-press" style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}>
+        <button
+          type="button"
+          onClick={() => openCreateLeadModal()}
+          className="btn btn-primary interactive-press"
+          style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', cursor: 'pointer' }}
+        >
           <Plus size={14} />
           <span>New Enquiry</span>
           <span className="kbd-shortcut" style={{ backgroundColor: 'rgba(255,255,255,0.2)', color: '#ffffff', borderColor: 'transparent', marginLeft: '0.25rem' }}>N</span>
-        </Link>
+        </button>
 
         {/* Notifications with subtle indicator */}
         <button type="button" className="icon-action-btn interactive-press" aria-label="Notifications">
