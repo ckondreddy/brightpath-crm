@@ -47,7 +47,7 @@ export const AuthPage: React.FC = () => {
         const { error } = await signIn(email, password)
         if (error) {
           if (error.message.includes('Invalid login credentials')) {
-            setErrorMessage('Invalid email or password. Please check your credentials.')
+            setErrorMessage('Account not found or password incorrect. If this is your first time, click "Create Staff Account" above to register!')
           } else {
             setErrorMessage(error.message)
           }
