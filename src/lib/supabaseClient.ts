@@ -77,12 +77,17 @@ export async function checkSupabaseHealth(): Promise<HealthCheckResult> {
     const latency = Math.round(performance.now() - startTime)
 
     if (error) {
-      // 404 / 401 or table doesn't exist yet (Phase 03 migration pending) is still reachable
-      if (error.code === '42P01' || error.message.includes('relation "profiles" does not exist')) {
+      // Table doesn't exist yet (PGRST205 / 42P01) means credentials are valid, schema migration pending
+      if (
+        error.code === '42P01' || 
+        error.code === 'PGRST205' || 
+        error.message.includes('relation "profiles" does not exist') ||
+        error.message.includes('Could not find the table')
+      ) {
         return {
           configured: true,
           healthy: true,
-          message: `Connected to Supabase endpoint (${latency}ms). Phase 03 SQL migrations pending.`,
+          message: `Connected to Supabase (${latency}ms). Phase 03 schema migrations pending.`,
           latencyMs: latency,
         }
       }
