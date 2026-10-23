@@ -361,11 +361,42 @@
   color: #34d399;
 }
 
+.timeline-node.note_added {
+  border-color: #f59e0b;
+  color: #fbbf24;
+}
+
+.timeline-node.follow_up_scheduled {
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.timeline-node.follow_up_completed {
+  border-color: #10b981;
+  color: #34d399;
+}
+
+.timeline-node.lead_edited {
+  border-color: #6366f1;
+  color: #818cf8;
+}
+
 .timeline-desc {
   font-size: 0.8125rem;
   color: #f1f5f9;
   font-weight: 500;
   line-height: 1.4;
+}
+
+.timeline-note-callout {
+  background-color: rgba(245, 158, 11, 0.05);
+  border-left: 2px solid #f59e0b;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #fde68a;
+  margin-top: 0.2rem;
+  line-height: 1.45;
 }
 
 .timeline-meta {
@@ -374,4 +405,50 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
+
+/* Add Note Box Styling */
+.add-note-box {
+  background-color: #0d1527;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.75rem 0.85rem;
+  margin-bottom: 0.85rem;
+}
+
+/* Timeline Filter Tabs */
+.timeline-filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: #090d16;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 2px;
+  width: fit-content;
+  margin-bottom: 0.75rem;
+}
+
+.timeline-filter-btn {
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.timeline-filter-btn:hover {
+  color: #f8fafc;
+}
+
+.timeline-filter-btn.active {
+  background-color: #1e293b;
+  color: #f8fafc;
+  font-weight: 600;
+}
+

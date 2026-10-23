@@ -429,7 +429,11 @@ export const LeadDetailPage: React.FC = () => {
                 <span>Enquiry Activity Timeline</span>
               </h3>
             </div>
-            <LeadActivityTimeline activities={lead.activities || []} />
+            <LeadActivityTimeline
+              leadId={lead.id}
+              activities={lead.activities || []}
+              onActivityAdded={refreshLead}
+            />
           </div>
         </div>
       </div>
