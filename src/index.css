@@ -1,4 +1,5 @@
 @import './styles/tokens.css';
+@import './styles/animations.css';
 
 /* Modern Reset & Base Rules */
 *, *::before, *::after {

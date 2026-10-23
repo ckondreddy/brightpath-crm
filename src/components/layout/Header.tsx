@@ -1,12 +1,14 @@
 import React from 'react'
 import { Menu, Search, Plus, Bell } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { ConnectionStatusBadge } from '../common/ConnectionStatusBadge'
 
 interface HeaderProps {
   onToggleSidebar: () => void
+  onOpenConfig?: () => void
 }
 
-export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
+export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onOpenConfig }) => {
   return (
     <header className="app-header">
       <div className="header-left">
@@ -33,15 +35,18 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
       </div>
 
       <div className="header-right">
+        {/* Live Supabase Connection Status Pill */}
+        <ConnectionStatusBadge onOpenConfig={onOpenConfig} />
+
         {/* Quick Action: New Enquiry Button */}
-        <Link to="/leads" className="btn btn-primary" style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}>
+        <Link to="/leads" className="btn btn-primary interactive-press" style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}>
           <Plus size={14} />
           <span>New Enquiry</span>
           <span className="kbd-shortcut" style={{ backgroundColor: 'rgba(255,255,255,0.2)', color: '#ffffff', borderColor: 'transparent', marginLeft: '0.25rem' }}>N</span>
         </Link>
 
         {/* Notifications with subtle indicator */}
-        <button type="button" className="icon-action-btn" aria-label="Notifications">
+        <button type="button" className="icon-action-btn interactive-press" aria-label="Notifications">
           <Bell size={17} />
           <span className="unread-dot" />
         </button>

@@ -29,7 +29,7 @@ export const SettingsPage: React.FC = () => {
             </div>
           </div>
           <p style={{ fontSize: '0.8rem', color: 'var(--slate-600)', marginBottom: '1rem', lineHeight: 1.4 }}>
-            Direct typed data-access layer via <code>@supabase/supabase-js</code>. Client singleton scheduled for initialization in Phase 02.
+            Direct typed data-access layer via <code>@supabase/supabase-js</code>. Client singleton initialized with fail-soft diagnostic probe and environment validation.
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--slate-500)' }}>
             <Key size={14} />
