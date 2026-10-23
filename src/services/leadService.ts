@@ -498,3 +498,35 @@ export async function updateLeadDetails(
     return { data: null, error: message }
   }
 }
+
+export interface LeadSelectItem {
+  id: string
+  full_name: string
+  phone: string
+  course_interest: string
+  status: LeadStatus
+  assigned_to: string | null
+}
+
+export async function fetchLeadsForSelect(): Promise<{ data: LeadSelectItem[]; error: string | null }> {
+  if (!supabase) {
+    return { data: [], error: 'Database client is not configured.' }
+  }
+  try {
+    const { data, error } = await supabase
+      .from('leads')
+      .select('id, full_name, phone, course_interest, status, assigned_to')
+      .neq('status', 'Lost')
+      .order('full_name', { ascending: true })
+      .limit(100)
+
+    if (error) {
+      return { data: [], error: error.message }
+    }
+    return { data: (data as LeadSelectItem[]) || [], error: null }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Failed to fetch leads for selection.'
+    return { data: [], error: msg }
+  }
+}
+

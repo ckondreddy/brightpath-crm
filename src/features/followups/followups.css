@@ -1,0 +1,411 @@
+/* ==========================================================================
+   BrightPath CRM — Follow-Ups & Task Schedule Engine
+   Obsidian Dark Minimalist Palette (Attio / Linear Standard)
+   ========================================================================== */
+
+.followups-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-bottom: 2.5rem;
+}
+
+/* Header & Controls */
+.followups-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.followups-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.followups-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.followups-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.followups-subtitle {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Alert Badge in Header */
+.overdue-counter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.725rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Filters & Search Row */
+.followups-controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Segmented Tabs Control */
+.followup-tabs {
+  display: inline-flex;
+  align-items: center;
+  background-color: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.followup-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.followup-tab-btn:hover {
+  color: #f8fafc;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.followup-tab-btn.active {
+  color: #f8fafc;
+  background-color: #1e293b;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.followup-tab-count {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+  font-variant-numeric: tabular-nums;
+}
+
+.followup-tab-count.alert {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Right Filter Dropdowns / Search */
+.followup-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.followup-search-input {
+  background-color: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 0.35rem 0.65rem 0.35rem 2rem;
+  font-size: 0.78rem;
+  color: #f8fafc;
+  outline: none;
+  width: 200px;
+  transition: border-color 0.15s ease;
+}
+
+.followup-search-input:focus {
+  border-color: #3b82f6;
+}
+
+.followup-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.followup-search-icon {
+  position: absolute;
+  left: 0.6rem;
+  color: #64748b;
+  pointer-events: none;
+}
+
+/* Follow-up Task List */
+.followup-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* Individual Follow-up Card */
+.followup-card {
+  position: relative;
+  background-color: #0d1527;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 0.95rem 1.15rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.followup-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Border Status Strip */
+.followup-card.is-overdue {
+  border-left: 3px solid #ef4444;
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.04) 0%, #0d1527 100%);
+}
+
+.followup-card.is-today {
+  border-left: 3px solid #f59e0b;
+}
+
+.followup-card.is-upcoming {
+  border-left: 3px solid #3b82f6;
+}
+
+.followup-card.is-completed {
+  border-left: 3px solid #10b981;
+  opacity: 0.85;
+}
+
+.followup-main-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  flex: 1;
+  min-width: 280px;
+}
+
+.followup-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background-color: #1e293b;
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.followup-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.followup-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.followup-student-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f8fafc;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.followup-student-link:hover {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.followup-course-tag {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.followup-note-text {
+  font-size: 0.8125rem;
+  color: #cbd5e1;
+  margin: 0.15rem 0;
+  line-height: 1.45;
+  background-color: rgba(255, 255, 255, 0.02);
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.followup-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.725rem;
+  color: #64748b;
+  flex-wrap: wrap;
+}
+
+.followup-time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.followup-time-pill.text-overdue {
+  color: #f87171;
+}
+
+.followup-time-pill.text-today {
+  color: #fbbf24;
+}
+
+.followup-time-pill.text-upcoming {
+  color: #93c5fd;
+}
+
+.followup-time-pill.text-completed {
+  color: #34d399;
+}
+
+/* Card Action Buttons */
+.followup-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.followup-btn-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: #34d399;
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.followup-btn-done:hover {
+  background-color: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.followup-btn-reschedule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.followup-btn-reschedule:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+}
+
+.followup-call-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: #60a5fa;
+  background-color: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.followup-call-link:hover {
+  background-color: rgba(37, 99, 235, 0.2);
+}
+
+/* Preset Tag Buttons in Modals */
+.preset-tag-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+}
+
+.preset-tag-btn {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preset-tag-btn:hover {
+  background-color: #334155;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Empty State */
+.followups-empty-card {
+  background-color: #0d1527;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}

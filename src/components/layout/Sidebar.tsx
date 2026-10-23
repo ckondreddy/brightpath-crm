@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { 
   LayoutDashboard, 
@@ -12,6 +12,7 @@ import {
   LogOut 
 } from 'lucide-react'
 import { useAuth } from '../../context/useAuth'
+import { fetchFollowUpCounts } from '../../services/followupService'
 
 interface SidebarProps {
   isOpen: boolean
@@ -31,6 +32,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         .slice(0, 2)
         .toUpperCase()
     : user?.email?.slice(0, 2).toUpperCase() || 'ST'
+
+  const [overdueCount, setOverdueCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    let isCancelled = false
+    fetchFollowUpCounts().then(({ data }) => {
+      if (!isCancelled) {
+        setOverdueCount(data.overdue)
+      }
+    })
+    return () => {
+      isCancelled = true
+    }
+  }, [])
 
   const handleSignOut = async () => {
     await signOut()
@@ -104,7 +119,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   <CalendarClock size={16} />
                   <span>Follow-ups</span>
                 </div>
-                <span className="nav-pill alert">4 due</span>
+                {overdueCount !== null && overdueCount > 0 ? (
+                  <span className="nav-pill alert">{overdueCount} due</span>
+                ) : (
+                  <span className="nav-pill" style={{ opacity: 0.6 }}>Queue</span>
+                )}
               </NavLink>
             </div>
           </div>

@@ -8,9 +8,11 @@ import {
   BookOpen, 
   User, 
   Clock, 
-  Calendar,
+  Calendar, 
   AlertCircle,
-  FileText
+  FileText,
+  Plus,
+  CheckCircle2
 } from 'lucide-react'
 import { useAuth } from '../context/useAuth'
 import { 
@@ -23,6 +25,9 @@ import { UserProfile, LeadStatus } from '../types'
 import { StatusLifecycleBar } from '../features/leads/StatusLifecycleBar'
 import { EditLeadModal } from '../features/leads/EditLeadModal'
 import { LeadActivityTimeline } from '../features/leads/LeadActivityTimeline'
+import { ScheduleFollowUpModal } from '../features/followups/ScheduleFollowUpModal'
+import { CompleteFollowUpModal } from '../features/followups/CompleteFollowUpModal'
+import { RescheduleFollowUpModal } from '../features/followups/RescheduleFollowUpModal'
 import '../features/leads/lead-detail.css'
 
 export const LeadDetailPage: React.FC = () => {
@@ -35,6 +40,9 @@ export const LeadDetailPage: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showEditModal, setShowEditModal] = useState(false)
+  const [showScheduleFollowUp, setShowScheduleFollowUp] = useState(false)
+  const [showCompleteFollowUp, setShowCompleteFollowUp] = useState(false)
+  const [showRescheduleFollowUp, setShowRescheduleFollowUp] = useState(false)
 
   const [nowMs] = useState(() => Date.now())
 
@@ -339,23 +347,77 @@ export const LeadDetailPage: React.FC = () => {
                 <Calendar size={14} style={{ color: '#60a5fa' }} />
                 <span>Next Scheduled Follow-up</span>
               </h3>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => setShowScheduleFollowUp(true)}
+                style={{ fontSize: '0.72rem', padding: '0.2rem 0.5rem', gap: '0.25rem' }}
+              >
+                <Plus size={12} />
+                <span>Schedule New</span>
+              </button>
             </div>
+
             {pendingFollowUp ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600, color: isOverdue ? '#f87171' : '#f8fafc' }}>
-                    {new Date(pendingFollowUp.due_at).toLocaleString()}
-                  </span>
-                  {isOverdue && <span className="overdue-tag">Overdue</span>}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 600, color: isOverdue ? '#f87171' : '#f8fafc' }}>
+                      {new Date(pendingFollowUp.due_at).toLocaleString()}
+                    </span>
+                    {isOverdue && <span className="overdue-tag">Overdue</span>}
+                  </div>
                 </div>
-                <p style={{ margin: 0, fontSize: '0.8rem', color: '#94a3b8' }}>
-                  {pendingFollowUp.note}
-                </p>
+
+                <div style={{ 
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)', 
+                  padding: '0.5rem 0.75rem', 
+                  borderRadius: '6px',
+                  borderLeft: isOverdue ? '3px solid #ef4444' : '3px solid #3b82f6'
+                }}>
+                  <p style={{ margin: 0, fontSize: '0.8125rem', color: '#cbd5e1', lineHeight: 1.45 }}>
+                    "{pendingFollowUp.note}"
+                  </p>
+                </div>
+
+                {/* Follow-up Quick Actions */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', paddingTop: '0.25rem' }}>
+                  <button
+                    type="button"
+                    className="btn btn-secondary interactive-press"
+                    onClick={() => setShowCompleteFollowUp(true)}
+                    style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem', color: '#34d399', borderColor: 'rgba(16, 185, 129, 0.3)' }}
+                  >
+                    <CheckCircle2 size={13} />
+                    <span>Mark Completed</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-secondary interactive-press"
+                    onClick={() => setShowRescheduleFollowUp(true)}
+                    style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem' }}
+                  >
+                    <Calendar size={13} />
+                    <span>Reschedule</span>
+                  </button>
+                </div>
               </div>
             ) : (
-              <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>
-                No active callback scheduled. Full follow-up scheduler will be configured in Phase 08.
-              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '0.5rem' }}>
+                <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>
+                  No active callback scheduled for this student.
+                </p>
+                <button
+                  type="button"
+                  className="btn btn-secondary interactive-press"
+                  onClick={() => setShowScheduleFollowUp(true)}
+                  style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem', gap: '0.3rem' }}
+                >
+                  <Plus size={12} />
+                  <span>Schedule Callback</span>
+                </button>
+              </div>
             )}
           </div>
 
@@ -379,6 +441,44 @@ export const LeadDetailPage: React.FC = () => {
           lead={lead}
           staffList={staffList}
           onClose={() => setShowEditModal(false)}
+          onSuccess={handleEditSuccess}
+        />
+      )}
+
+      {/* Schedule Follow-up Modal */}
+      {showScheduleFollowUp && (
+        <ScheduleFollowUpModal
+          isOpen={showScheduleFollowUp}
+          preselectedLeadId={lead.id}
+          preselectedLeadName={lead.full_name}
+          staffList={staffList}
+          onClose={() => setShowScheduleFollowUp(false)}
+          onSuccess={handleEditSuccess}
+        />
+      )}
+
+      {/* Complete Follow-up Modal */}
+      {showCompleteFollowUp && pendingFollowUp && (
+        <CompleteFollowUpModal
+          isOpen={showCompleteFollowUp}
+          followUpId={pendingFollowUp.id}
+          leadId={lead.id}
+          studentName={lead.full_name}
+          scheduledNote={pendingFollowUp.note}
+          onClose={() => setShowCompleteFollowUp(false)}
+          onSuccess={handleEditSuccess}
+        />
+      )}
+
+      {/* Reschedule Follow-up Modal */}
+      {showRescheduleFollowUp && pendingFollowUp && (
+        <RescheduleFollowUpModal
+          isOpen={showRescheduleFollowUp}
+          followUpId={pendingFollowUp.id}
+          leadId={lead.id}
+          studentName={lead.full_name}
+          currentDueAt={pendingFollowUp.due_at}
+          onClose={() => setShowRescheduleFollowUp(false)}
           onSuccess={handleEditSuccess}
         />
       )}
