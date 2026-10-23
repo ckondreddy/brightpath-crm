@@ -1,7 +1,8 @@
 import React from 'react'
-import { Menu, Search, Plus, Bell } from 'lucide-react'
+import { Menu, Search, Plus, Bell, LogOut, User as UserIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ConnectionStatusBadge } from '../common/ConnectionStatusBadge'
+import { useAuth } from '../../context/useAuth'
 
 interface HeaderProps {
   onToggleSidebar: () => void
@@ -9,6 +10,11 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onOpenConfig }) => {
+  const { user, profile, signOut } = useAuth()
+
+  const displayName = profile?.full_name || user?.email?.split('@')[0] || 'Staff'
+  const displayRole = profile?.role || 'counsellor'
+
   return (
     <header className="app-header">
       <div className="header-left">
@@ -50,6 +56,50 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onOpenConfig })
           <Bell size={17} />
           <span className="unread-dot" />
         </button>
+
+        {/* User Profile & Sign Out Action */}
+        {user ? (
+          <div 
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              paddingLeft: '0.5rem',
+              borderLeft: '1px solid var(--border-default)',
+            }}
+          >
+            <div 
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                lineHeight: 1.15,
+              }}
+            >
+              <span style={{ fontSize: '0.775rem', fontWeight: 600, color: 'var(--slate-900)' }}>
+                {displayName}
+              </span>
+              <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--color-brand-600)', textTransform: 'uppercase' }}>
+                {displayRole}
+              </span>
+            </div>
+
+            <button
+              type="button"
+              className="icon-action-btn interactive-press"
+              onClick={() => signOut()}
+              title="Sign Out"
+              aria-label="Sign Out"
+            >
+              <LogOut size={15} />
+            </button>
+          </div>
+        ) : (
+          <Link to="/login" className="btn btn-secondary interactive-press" style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem' }}>
+            <UserIcon size={14} />
+            <span>Sign In</span>
+          </Link>
+        )}
       </div>
     </header>
   )

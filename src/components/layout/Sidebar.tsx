@@ -8,8 +8,10 @@ import {
   Settings, 
   GraduationCap,
   ChevronDown,
-  X 
+  X,
+  LogOut 
 } from 'lucide-react'
+import { useAuth } from '../../context/useAuth'
 
 interface SidebarProps {
   isOpen: boolean
@@ -17,6 +19,24 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+  const { user, profile, signOut } = useAuth()
+
+  const displayName = profile?.full_name || user?.email?.split('@')[0] || 'Academy Staff'
+  const displayRole = (profile?.role || 'Counsellor').toUpperCase()
+  const initials = profile?.full_name
+    ? profile.full_name
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase()
+    : user?.email?.slice(0, 2).toUpperCase() || 'ST'
+
+  const handleSignOut = async () => {
+    await signOut()
+    onClose()
+  }
+
   return (
     <>
       <div 
@@ -122,19 +142,37 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           </div>
         </nav>
 
-        {/* Counsellor Shift Presence Footer */}
+        {/* Dynamic Authenticated User Presence Footer */}
         <div className="sidebar-footer">
           <div className="user-presence">
-            <div className="presence-avatar">
-              PS
+            <div className="presence-avatar" title={`Signed in as ${user?.email || displayName}`}>
+              {initials}
               <span className="presence-dot" title="Active on Duty" />
             </div>
             <div className="presence-info">
-              <span className="presence-name">Priya Sharma</span>
-              <span className="presence-role">Senior Counsellor</span>
+              <span className="presence-name">{displayName}</span>
+              <span className="presence-role">{displayRole}</span>
             </div>
           </div>
-          <span style={{ fontSize: '0.65rem', color: '#64748b', fontFamily: 'var(--font-mono)' }}>v1.0</span>
+
+          {user && (
+            <button
+              type="button"
+              className="interactive-press"
+              onClick={handleSignOut}
+              title="Sign Out of Workspace"
+              style={{
+                color: '#94a3b8',
+                padding: '0.3rem',
+                borderRadius: 'var(--radius-xs)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <LogOut size={14} />
+            </button>
+          )}
         </div>
       </aside>
     </>
