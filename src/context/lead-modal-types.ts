@@ -6,6 +6,7 @@ export interface LeadModalContextValue {
   openCreateLeadModal: (onSuccessCallback?: (newLead: Lead) => void) => void
   closeCreateLeadModal: () => void
   notifyLeadCreated: (newLead: Lead) => void
+  lastCreatedLead: Lead | null
 }
 
 export const LeadModalContext = createContext<LeadModalContextValue | undefined>(undefined)

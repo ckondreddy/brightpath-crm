@@ -1,9 +1,45 @@
 import { supabase } from '../lib/supabaseClient'
 import { Database } from '../types/database.types'
-import { Lead, LeadSource, UserProfile } from '../types'
+import { Lead, LeadSource, LeadStatus, UserProfile } from '../types'
 
 type LeadInsert = Database['public']['Tables']['leads']['Insert']
 type ActivityInsert = Database['public']['Tables']['activities']['Insert']
+
+export interface LeadWithRelations extends Lead {
+  assignee?: UserProfile | null
+  follow_ups?: {
+    id: string
+    due_at: string
+    status: 'pending' | 'completed' | 'cancelled'
+    note: string
+  }[]
+}
+
+export interface FetchLeadsOptions {
+  searchQuery?: string
+  status?: LeadStatus | 'all'
+  source?: LeadSource | 'all'
+  assignedTo?: string | 'all'
+  sortBy?: 'created_at' | 'full_name' | 'status'
+  sortOrder?: 'asc' | 'desc'
+  page?: number
+  pageSize?: number
+}
+
+export interface FetchLeadsResult {
+  data: LeadWithRelations[]
+  count: number
+  error: string | null
+}
+
+export interface LeadStatusCounts {
+  all: number
+  New: number
+  Contacted: number
+  Qualified: number
+  Converted: number
+  Lost: number
+}
 
 export interface CreateLeadInput {
   full_name: string
@@ -134,7 +170,6 @@ export async function createLead(
       .insert(activityPayload)
 
     if (activityError) {
-      // Non-blocking warning: activity failed to record but lead is safely persisted
       console.warn('Lead was created, but failed to record audit activity:', activityError)
     }
 
@@ -167,5 +202,122 @@ export async function fetchStaffProfiles(): Promise<{ data: UserProfile[]; error
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Failed to fetch staff members.'
     return { data: [], error: message }
+  }
+}
+
+/**
+ * Fetches paginated, filtered, and sorted leads with joined assignee and follow-up data.
+ */
+export async function fetchLeads(options: FetchLeadsOptions = {}): Promise<FetchLeadsResult> {
+  if (!supabase) {
+    return { data: [], count: 0, error: 'Database client is not configured.' }
+  }
+
+  const {
+    searchQuery,
+    status = 'all',
+    source = 'all',
+    assignedTo = 'all',
+    sortBy = 'created_at',
+    sortOrder = 'desc',
+    page = 1,
+    pageSize = 20,
+  } = options
+
+  try {
+    let query = supabase
+      .from('leads')
+      .select(
+        '*, assignee:profiles!leads_assigned_to_fkey(id, full_name, role), follow_ups(id, due_at, status, note)',
+        { count: 'exact' }
+      )
+
+    // 1. Status Filter
+    if (status && status !== 'all') {
+      query = query.eq('status', status)
+    }
+
+    // 2. Source Filter
+    if (source && source !== 'all') {
+      query = query.eq('source', source)
+    }
+
+    // 3. Assignee Filter
+    if (assignedTo && assignedTo !== 'all') {
+      query = query.eq('assigned_to', assignedTo)
+    }
+
+    // 4. Search Filter (Debounced client-side, applied across student name, phone, email, course)
+    if (searchQuery && searchQuery.trim()) {
+      const sanitized = searchQuery.trim().replace(/[%_]/g, '')
+      if (sanitized) {
+        query = query.or(
+          `full_name.ilike.%${sanitized}%,phone.ilike.%${sanitized}%,email.ilike.%${sanitized}%,course_interest.ilike.%${sanitized}%`
+        )
+      }
+    }
+
+    // 5. Sorting
+    query = query.order(sortBy, { ascending: sortOrder === 'asc' })
+
+    // 6. Range Pagination
+    const from = (page - 1) * pageSize
+    const to = from + pageSize - 1
+    query = query.range(from, to)
+
+    const { data, count, error } = await query
+
+    if (error) {
+      console.error('Failed to fetch leads from Supabase:', error)
+      return { data: [], count: 0, error: error.message }
+    }
+
+    return {
+      data: (data as unknown as LeadWithRelations[]) || [],
+      count: count || 0,
+      error: null,
+    }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'An error occurred while fetching enquiries.'
+    return { data: [], count: 0, error: message }
+  }
+}
+
+/**
+ * Retrieves live counts for each lead pipeline stage to power segmented tabs.
+ */
+export async function fetchLeadStatusCounts(): Promise<LeadStatusCounts> {
+  const defaultCounts: LeadStatusCounts = {
+    all: 0,
+    New: 0,
+    Contacted: 0,
+    Qualified: 0,
+    Converted: 0,
+    Lost: 0,
+  }
+
+  if (!supabase) return defaultCounts
+
+  try {
+    const [allRes, newRes, contactedRes, qualifiedRes, convertedRes, lostRes] = await Promise.all([
+      supabase.from('leads').select('*', { count: 'exact', head: true }),
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('status', 'New'),
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('status', 'Contacted'),
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('status', 'Qualified'),
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('status', 'Converted'),
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('status', 'Lost'),
+    ])
+
+    return {
+      all: allRes.count || 0,
+      New: newRes.count || 0,
+      Contacted: contactedRes.count || 0,
+      Qualified: qualifiedRes.count || 0,
+      Converted: convertedRes.count || 0,
+      Lost: lostRes.count || 0,
+    }
+  } catch (err) {
+    console.error('Failed to retrieve status counts:', err)
+    return defaultCounts
   }
 }

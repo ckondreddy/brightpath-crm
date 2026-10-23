@@ -5,6 +5,7 @@ import { CreateLeadModal } from '../features/leads/CreateLeadModal'
 
 export const LeadModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [lastCreatedLead, setLastCreatedLead] = useState<Lead | null>(null)
   const callbackRef = useRef<((lead: Lead) => void) | undefined>(undefined)
 
   const openCreateLeadModal = useCallback((callback?: (lead: Lead) => void) => {
@@ -18,6 +19,7 @@ export const LeadModalProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   }, [])
 
   const notifyLeadCreated = useCallback((newLead: Lead) => {
+    setLastCreatedLead(newLead)
     if (callbackRef.current) {
       callbackRef.current(newLead)
     }
@@ -30,6 +32,7 @@ export const LeadModalProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         openCreateLeadModal,
         closeCreateLeadModal,
         notifyLeadCreated,
+        lastCreatedLead,
       }}
     >
       {children}
