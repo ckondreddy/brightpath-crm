@@ -15,6 +15,7 @@ import {
   Compass
 } from 'lucide-react'
 import { fetchDashboardMetrics, DashboardMetrics } from '../services/dashboardService'
+import { DashboardReportsSection } from '../features/dashboard/DashboardReportsSection'
 import { useLeadModal } from '../context/useLeadModal'
 import '../features/dashboard/dashboard.css'
 
@@ -372,6 +373,9 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Admissions Reports & Performance Intelligence Section */}
+      <DashboardReportsSection timeRange={timeRange} />
 
       {/* Bottom: Recent Student Enquiries Table */}
       <div className="dashboard-section-card">

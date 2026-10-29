@@ -138,8 +138,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               >
                 <div className="nav-link-left">
                   <BarChart3 size={16} />
-                  <span>Admissions Analytics</span>
+                  <span>Reports & Analytics</span>
                 </div>
+                <span className="nav-pill" style={{ opacity: 0.7 }}>Live</span>
               </NavLink>
             </div>
           </div>
