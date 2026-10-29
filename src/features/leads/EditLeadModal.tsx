@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Edit3, X, AlertCircle, RefreshCw, Check } from 'lucide-react'
 import { useAuth } from '../../context/useAuth'
+import { useToast } from '../../context/useToast'
+import { useFocusTrap } from '../../hooks/useFocusTrap'
 import { Lead, LeadSource, UserProfile } from '../../types'
 import { 
   updateLeadDetails, 
@@ -43,6 +45,12 @@ const EditLeadModalInner: React.FC<Omit<EditLeadModalProps, 'isOpen'>> = ({
   onSuccess,
 }) => {
   const { user } = useAuth()
+  const toast = useToast()
+  const modalRef = useFocusTrap<HTMLDivElement>({
+    active: true,
+    onClose,
+    initialFocusSelector: '#editStudentName',
+  })
 
   // Form State initialized directly from lead props on mount
   const [fullName, setFullName] = useState(lead.full_name)
@@ -106,10 +114,13 @@ const EditLeadModalInner: React.FC<Omit<EditLeadModalProps, 'isOpen'>> = ({
     setIsSubmitting(false)
 
     if (error || !data) {
-      setServerError(error || 'Failed to update enquiry details.')
+      const msg = error || 'Failed to update enquiry details.'
+      setServerError(msg)
+      toast.error(msg)
       return
     }
 
+    toast.success(`Updated enquiry details for ${data.full_name}`)
     onSuccess(data)
     onClose()
   }
@@ -122,7 +133,11 @@ const EditLeadModalInner: React.FC<Omit<EditLeadModalProps, 'isOpen'>> = ({
       aria-modal="true"
       aria-labelledby="edit-lead-dialog-title"
     >
-      <div className="lead-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div 
+        ref={modalRef} 
+        className="lead-modal-card" 
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Modal Header */}
         <div className="lead-modal-header">
           <div className="lead-modal-title-group">

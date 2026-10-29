@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { CheckCircle2, X, AlertCircle, RefreshCw, Check } from 'lucide-react'
 import { useAuth } from '../../context/useAuth'
+import { useToast } from '../../context/useToast'
+import { useFocusTrap } from '../../hooks/useFocusTrap'
 import { completeFollowUp } from '../../services/followupService'
 
 interface CompleteFollowUpModalProps {
@@ -31,6 +33,11 @@ const CompleteFollowUpModalInner: React.FC<Omit<CompleteFollowUpModalProps, 'isO
   onSuccess,
 }) => {
   const { user } = useAuth()
+  const toast = useToast()
+  const modalRef = useFocusTrap<HTMLDivElement>({
+    active: true,
+    onClose,
+  })
   const [outcomeNote, setOutcomeNote] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -64,9 +71,11 @@ const CompleteFollowUpModalInner: React.FC<Omit<CompleteFollowUpModalProps, 'isO
 
     if (result.error) {
       setErrorMessage(result.error)
+      toast.error(result.error)
       return
     }
 
+    toast.success(`Follow-up consultation marked as completed`)
     onSuccess()
     onClose()
   }
@@ -79,7 +88,12 @@ const CompleteFollowUpModalInner: React.FC<Omit<CompleteFollowUpModalProps, 'isO
       aria-modal="true"
       aria-labelledby="complete-modal-title"
     >
-      <div className="lead-modal-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '480px' }}>
+      <div 
+        ref={modalRef}
+        className="lead-modal-card" 
+        onClick={(e) => e.stopPropagation()} 
+        style={{ maxWidth: '480px' }}
+      >
         {/* Header */}
         <div className="lead-modal-header">
           <div className="lead-modal-title-group">

@@ -337,15 +337,13 @@ Every single feature milestone adheres to a strict continuous delivery progressi
 | **09** | **Activity Feed & Timeline** | `LeadActivityTimeline.tsx`, `AddNoteBox.tsx`, `activityService.ts` | **COMPLETED** | `242d808` |
 | **10** | **Executive Live Dashboard** | `DashboardPage.tsx`, `dashboardService.ts`, `dashboard.css` | **COMPLETED** | `2d18bc1` |
 | **11** | **Reports & CSV Export** | `ReportsPage.tsx`, `reportService.ts`, `reports.css`, Subcomponents | **COMPLETED** | `feat(reports)` |
+| **12** | **Production Hardening, a11y & Polish** | `ToastContext.tsx`, `useToast.ts`, `ToastContainer.tsx`, `NetworkStatusBanner.tsx`, `ErrorBoundary.tsx`, `KeyboardShortcutsModal.tsx`, `useFocusTrap.ts`, `useGlobalShortcuts.ts` | **COMPLETED** | `feat(hardening)` |
 
 ---
 
 ## 4. Upcoming Feature Roadmap
 
-* **Phase 12: Production Hardening, Accessibility & Polish**
-  - Global toast notification system for background mutation feedback.
-  - WCAG AA contrast audit and keyboard focus trap enhancements.
-  - Network disconnection handling and offline resilience.
 * **Phase 13: End-to-End Verification, Handover & Documentation**
   - Multi-role regression testing pass (`admin`, `manager`, `counsellor`).
   - Production verification on live Vercel cloud deployment.
+  - Final project handover and comprehensive technical documentation.

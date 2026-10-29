@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Plus, Download, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Plus, Download, ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react'
 import { useLeads } from '../hooks/useLeads'
 import { useLeadModal } from '../context/useLeadModal'
+import { useToast } from '../context/useToast'
 import { fetchStaffProfiles } from '../services/leadService'
+import { downloadLeadsCsv } from '../services/reportService'
 import { UserProfile } from '../types'
 import { LeadFiltersBar } from '../features/leads/LeadFiltersBar'
 import { LeadsTable } from '../features/leads/LeadsTable'
@@ -10,6 +12,8 @@ import '../features/leads/leads.css'
 
 export const LeadsPage: React.FC = () => {
   const { openCreateLeadModal } = useLeadModal()
+  const toast = useToast()
+  const [exporting, setExporting] = useState(false)
   const {
     leads,
     totalCount,
@@ -53,6 +57,27 @@ export const LeadsPage: React.FC = () => {
   const startRecord = totalCount === 0 ? 0 : (page - 1) * pageSize + 1
   const endRecord = Math.min(page * pageSize, totalCount)
 
+  const handleExportCsv = async () => {
+    setExporting(true)
+    try {
+      const res = await downloadLeadsCsv({
+        dateRange: 'all',
+        status: statusFilter !== 'all' ? statusFilter : undefined,
+        source: sourceFilter !== 'all' ? sourceFilter : undefined,
+        counsellorId: counsellorFilter !== 'all' ? counsellorFilter : undefined,
+      })
+      if (res.success) {
+        toast.success(`Exported ${res.count} filtered student enquiries to CSV`)
+      } else {
+        toast.error(res.error || 'Failed to export CSV.')
+      }
+    } catch {
+      toast.error('Unexpected error generating CSV.')
+    } finally {
+      setExporting(false)
+    }
+  }
+
   return (
     <div className="container-fluid" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       {/* Top Header */}
@@ -74,12 +99,14 @@ export const LeadsPage: React.FC = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           <button 
             type="button" 
-            className="btn btn-secondary" 
-            title="Export CSV (Enabled in Reports milestone)"
-            onClick={() => alert('Exporting will be available with customizable reporting in Phase 11.')}
+            className="btn btn-secondary interactive-press" 
+            title="Export filtered student enquiries to CSV"
+            onClick={handleExportCsv}
+            disabled={exporting || loading || totalCount === 0}
+            aria-label="Export enquiries to CSV"
           >
-            <Download size={14} />
-            <span>Export CSV</span>
+            {exporting ? <RefreshCw size={14} className="spin" /> : <Download size={14} />}
+            <span>{exporting ? 'Exporting...' : 'Export CSV'}</span>
           </button>
           <button 
             type="button" 

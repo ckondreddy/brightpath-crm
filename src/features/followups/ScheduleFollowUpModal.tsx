@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { CalendarClock, X, AlertCircle, RefreshCw, Check } from 'lucide-react'
 import { useAuth } from '../../context/useAuth'
+import { useToast } from '../../context/useToast'
+import { useFocusTrap } from '../../hooks/useFocusTrap'
 import { UserProfile } from '../../types'
 import { scheduleFollowUp } from '../../services/followupService'
 import { fetchLeadsForSelect, LeadSelectItem } from '../../services/leadService'
@@ -32,6 +34,11 @@ const ScheduleFollowUpModalInner: React.FC<Omit<ScheduleFollowUpModalProps, 'isO
   onSuccess,
 }) => {
   const { user } = useAuth()
+  const toast = useToast()
+  const modalRef = useFocusTrap<HTMLDivElement>({
+    active: true,
+    onClose,
+  })
 
   // State
   const [leadId, setLeadId] = useState<string>(preselectedLeadId || '')
@@ -142,9 +149,11 @@ const ScheduleFollowUpModalInner: React.FC<Omit<ScheduleFollowUpModalProps, 'isO
 
     if (result.error) {
       setErrorMessage(result.error)
+      toast.error(result.error)
       return
     }
 
+    toast.success('Follow-up consultation reminder scheduled')
     onSuccess()
     onClose()
   }
@@ -157,7 +166,11 @@ const ScheduleFollowUpModalInner: React.FC<Omit<ScheduleFollowUpModalProps, 'isO
       aria-modal="true"
       aria-labelledby="schedule-modal-title"
     >
-      <div className="lead-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div 
+        ref={modalRef}
+        className="lead-modal-card" 
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="lead-modal-header">
           <div className="lead-modal-title-group">

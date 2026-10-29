@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Send, RefreshCw, AlertCircle, MessageSquare } from 'lucide-react'
 import { useAuth } from '../../context/useAuth'
+import { useToast } from '../../context/useToast'
 import { addLeadNote } from '../../services/activityService'
 
 interface AddNoteBoxProps {
@@ -18,6 +19,7 @@ const QUICK_NOTE_CHIPS = [
 
 export const AddNoteBox: React.FC<AddNoteBoxProps> = ({ leadId, onNoteAdded }) => {
   const { user } = useAuth()
+  const toast = useToast()
   const [noteText, setNoteText] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -39,9 +41,11 @@ export const AddNoteBox: React.FC<AddNoteBoxProps> = ({ leadId, onNoteAdded }) =
 
     if (error) {
       setErrorMessage(error)
+      toast.error(error)
       return
     }
 
+    toast.success('Consultation note recorded')
     setNoteText('')
     setIsExpanded(false)
     onNoteAdded()

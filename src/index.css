@@ -249,3 +249,27 @@ input, select, textarea {
   max-width: 1440px;
   margin: 0 auto;
 }
+
+/* Accessibility Skip Navigation Link */
+.skip-nav-link {
+  position: absolute;
+  top: -999px;
+  left: 1rem;
+  z-index: 10001;
+  background-color: var(--color-brand-600);
+  color: #ffffff;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: top 0.15s ease;
+}
+
+.skip-nav-link:focus {
+  top: 1rem;
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+

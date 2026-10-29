@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { AlertTriangle, X, Check } from 'lucide-react'
+import { useFocusTrap } from '../../hooks/useFocusTrap'
 
 interface LostReasonModalProps {
   isOpen: boolean
@@ -25,6 +26,10 @@ export const LostReasonModal: React.FC<LostReasonModalProps> = ({
   onClose,
   onSubmit,
 }) => {
+  const modalRef = useFocusTrap<HTMLDivElement>({
+    active: isOpen,
+    onClose,
+  })
   const [selectedReason, setSelectedReason] = useState(LOST_REASONS[0])
   const [customDetail, setCustomDetail] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -85,19 +90,20 @@ export const LostReasonModal: React.FC<LostReasonModalProps> = ({
       aria-labelledby="lost-dialog-title"
     >
       <div
+        ref={modalRef}
         className="lead-modal-card"
         style={{ maxWidth: '520px' }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="lead-modal-header" style={{ borderBottomColor: 'rgba(239, 68, 68, 0.2)' }}>
+        <div className="lead-modal-header" style={{ borderBottomColor: '#fecaca' }}>
           <div className="lead-modal-title-group">
             <div
               className="lead-modal-icon-badge"
               style={{
-                background: 'rgba(239, 68, 68, 0.15)',
-                borderColor: 'rgba(239, 68, 68, 0.3)',
-                color: '#f87171',
+                background: '#fef2f2',
+                borderColor: '#fecaca',
+                color: '#dc2626',
               }}
             >
               <AlertTriangle size={18} />

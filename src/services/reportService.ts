@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabaseClient'
+import { LeadStatus } from '../types'
 
 export type ReportDateRange = '7d' | '30d' | 'this_month' | 'this_quarter' | 'all' | 'custom'
 
@@ -8,6 +9,7 @@ export interface ReportFilterOptions {
   endDate?: string // YYYY-MM-DD
   source?: string
   counsellorId?: string
+  status?: string
 }
 
 export interface ReportSummaryKPIs {
@@ -693,6 +695,7 @@ export async function downloadLeadsCsv(
       if (toIso) query = query.lte('created_at', toIso)
       if (filters.source && filters.source !== 'all') query = query.eq('source', filters.source)
       if (filters.counsellorId && filters.counsellorId !== 'all') query = query.eq('assigned_to', filters.counsellorId)
+      if (filters.status && filters.status !== 'all') query = query.eq('status', filters.status as LeadStatus)
 
       const { data, error } = await query
 

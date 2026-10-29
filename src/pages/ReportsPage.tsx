@@ -27,6 +27,7 @@ import { CounsellorLeaderboard } from '../features/reports/CounsellorLeaderboard
 import { ProgramDemandTable } from '../features/reports/ProgramDemandTable'
 import { LostReasonBreakdown } from '../features/reports/LostReasonBreakdown'
 import { ReportsSkeleton } from '../features/reports/ReportsSkeleton'
+import { useToast } from '../context/useToast'
 import '../features/reports/reports.css'
 
 type ReportTab = 'overview' | 'channels' | 'counsellors' | 'programs' | 'lost'
@@ -34,6 +35,7 @@ type ReportTab = 'overview' | 'channels' | 'counsellors' | 'programs' | 'lost'
 const SOURCES_LIST: LeadSource[] = ['Website', 'Walk-in', 'Phone', 'Social Media', 'Referral', 'Other']
 
 export const ReportsPage: React.FC = () => {
+  const toast = useToast()
   const [data, setData] = useState<ReportData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -127,12 +129,16 @@ export const ReportsPage: React.FC = () => {
       const result = await downloadLeadsCsv(filters)
       if (result.success) {
         setExportSuccessMsg(`Successfully exported ${result.count} sanitized student records.`)
+        toast.success(`Exported ${result.count} student enquiry records to CSV`)
         setTimeout(() => setExportSuccessMsg(null), 5000)
       } else {
-        setError(result.error || 'Failed to export CSV.')
+        const msg = result.error || 'Failed to export CSV.'
+        setError(msg)
+        toast.error(msg)
       }
     } catch {
       setError('Unexpected error during CSV generation.')
+      toast.error('Unexpected error during CSV generation.')
     } finally {
       setExporting(false)
     }

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Menu, Search, Plus, Bell, LogOut, User as UserIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Menu, Search, Plus, Bell, LogOut, User as UserIcon, HelpCircle } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
 import { ConnectionStatusBadge } from '../common/ConnectionStatusBadge'
 import { useAuth } from '../../context/useAuth'
 import { useLeadModal } from '../../context/useLeadModal'
@@ -8,40 +8,31 @@ import { useLeadModal } from '../../context/useLeadModal'
 interface HeaderProps {
   onToggleSidebar: () => void
   onOpenConfig?: () => void
+  onOpenShortcuts?: () => void
 }
 
-export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onOpenConfig }) => {
+export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onOpenConfig, onOpenShortcuts }) => {
   const { user, profile, signOut } = useAuth()
   const { openCreateLeadModal } = useLeadModal()
+  const navigate = useNavigate()
 
   const displayName = profile?.full_name || user?.email?.split('@')[0] || 'Staff'
   const displayRole = profile?.role || 'counsellor'
 
-  // Global keyboard shortcut: Press 'N' to open New Enquiry modal
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement | null
-      const isInput = target && (
-        target.tagName === 'INPUT' ||
-        target.tagName === 'TEXTAREA' ||
-        target.tagName === 'SELECT' ||
-        target.isContentEditable
-      )
-
-      if (isInput) return
-
-      if ((e.key === 'n' || e.key === 'N') && !e.metaKey && !e.ctrlKey && !e.altKey) {
-        e.preventDefault()
-        openCreateLeadModal()
-      }
+  const handleSearchClick = () => {
+    const searchInput = document.querySelector<HTMLInputElement>(
+      'input[type="text"][placeholder*="Search"], input[placeholder*="search"], #global-search-input'
+    )
+    if (searchInput) {
+      searchInput.focus()
+      searchInput.select()
+    } else {
+      navigate('/leads')
     }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [openCreateLeadModal])
+  }
 
   return (
-    <header className="app-header">
+    <header className="app-header" role="banner">
       <div className="header-left">
         <button 
           type="button" 
@@ -56,7 +47,8 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onOpenConfig })
         <button 
           type="button" 
           className="command-search-btn"
-          onClick={() => {}}
+          onClick={handleSearchClick}
+          aria-label="Search student enquiries (Press ⌘K or Ctrl+K)"
           title="Search student enquiries (Press ⌘K or Ctrl+K)"
         >
           <Search size={14} style={{ color: 'var(--slate-400)', flexShrink: 0 }} />
@@ -75,10 +67,22 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onOpenConfig })
           onClick={() => openCreateLeadModal()}
           className="btn btn-primary interactive-press"
           style={{ padding: '0.35rem 0.75rem', fontSize: '0.8rem', cursor: 'pointer' }}
+          aria-label="Log new student enquiry (Press N)"
         >
           <Plus size={14} />
           <span>New Enquiry</span>
           <span className="kbd-shortcut" style={{ backgroundColor: 'rgba(255,255,255,0.2)', color: '#ffffff', borderColor: 'transparent', marginLeft: '0.25rem' }}>N</span>
+        </button>
+
+        {/* Keyboard Shortcuts Help */}
+        <button
+          type="button"
+          onClick={onOpenShortcuts}
+          className="icon-action-btn interactive-press"
+          aria-label="Keyboard Shortcuts (Press ?)"
+          title="Keyboard Shortcuts (Press ?)"
+        >
+          <HelpCircle size={17} />
         </button>
 
         {/* Notifications with subtle indicator */}

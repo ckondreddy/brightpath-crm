@@ -15,6 +15,7 @@ import {
   CheckCircle2
 } from 'lucide-react'
 import { useAuth } from '../context/useAuth'
+import { useToast } from '../context/useToast'
 import { 
   fetchLeadById, 
   fetchStaffProfiles, 
@@ -34,6 +35,7 @@ export const LeadDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { user } = useAuth()
+  const toast = useToast()
 
   const [lead, setLead] = useState<LeadDetailWithRelations | null>(null)
   const [staffList, setStaffList] = useState<UserProfile[]>([])
@@ -95,8 +97,9 @@ export const LeadDetailPage: React.FC = () => {
     )
 
     if (result.error) {
-      alert(`Status update failed: ${result.error}`)
+      toast.error(`Status update failed: ${result.error}`)
     } else {
+      toast.success(`Pipeline status updated to ${newStatus}`)
       // Refresh lead and audit trail
       await refreshLead()
     }
@@ -273,7 +276,7 @@ export const LeadDetailPage: React.FC = () => {
             <div className="lead-kv-grid">
               <div className="lead-kv-item">
                 <span className="lead-kv-label">Selected Course Track</span>
-                <span className="lead-kv-value" style={{ fontWeight: 600, color: '#f8fafc' }}>
+                <span className="lead-kv-value" style={{ fontWeight: 600, color: '#0f172a' }}>
                   {lead.course_interest}
                 </span>
               </div>
@@ -288,7 +291,7 @@ export const LeadDetailPage: React.FC = () => {
           <div className="lead-section-card">
             <div className="lead-section-header">
               <h3 className="lead-section-title">
-                <User size={14} style={{ color: '#38bdf8' }} />
+                <User size={14} style={{ color: '#0284c7' }} />
                 <span>Counsellor Assignment</span>
               </h3>
               <button
@@ -303,7 +306,7 @@ export const LeadDetailPage: React.FC = () => {
             <div className="lead-kv-grid">
               <div className="lead-kv-item">
                 <span className="lead-kv-label">Assigned Staff</span>
-                <span className="lead-kv-value" style={{ color: '#f8fafc' }}>
+                <span className="lead-kv-value" style={{ color: '#0f172a' }}>
                   {lead.assignee?.full_name || 'Unassigned'}
                 </span>
               </div>
@@ -320,7 +323,7 @@ export const LeadDetailPage: React.FC = () => {
           <div className="lead-section-card">
             <div className="lead-section-header">
               <h3 className="lead-section-title">
-                <FileText size={14} style={{ color: '#f59e0b' }} />
+                <FileText size={14} style={{ color: '#d97706' }} />
                 <span>Counsellor Notes</span>
               </h3>
               <button
@@ -332,7 +335,7 @@ export const LeadDetailPage: React.FC = () => {
                 Edit Notes
               </button>
             </div>
-            <p style={{ margin: 0, fontSize: '0.8125rem', color: '#cbd5e1', lineHeight: 1.5, whiteSpace: 'pre-wrap' }}>
+            <p style={{ margin: 0, fontSize: '0.8125rem', color: '#334155', lineHeight: 1.5, whiteSpace: 'pre-wrap' }}>
               {lead.notes || 'No preliminary notes recorded for this enquiry.'}
             </p>
           </div>
@@ -344,7 +347,7 @@ export const LeadDetailPage: React.FC = () => {
           <div className="lead-section-card">
             <div className="lead-section-header">
               <h3 className="lead-section-title">
-                <Calendar size={14} style={{ color: '#60a5fa' }} />
+                <Calendar size={14} style={{ color: '#2563eb' }} />
                 <span>Next Scheduled Follow-up</span>
               </h3>
               <button
@@ -362,7 +365,7 @@ export const LeadDetailPage: React.FC = () => {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 600, color: isOverdue ? '#f87171' : '#f8fafc' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 600, color: isOverdue ? '#dc2626' : '#0f172a' }}>
                       {new Date(pendingFollowUp.due_at).toLocaleString()}
                     </span>
                     {isOverdue && <span className="overdue-tag">Overdue</span>}
@@ -370,12 +373,13 @@ export const LeadDetailPage: React.FC = () => {
                 </div>
 
                 <div style={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.03)', 
-                  padding: '0.5rem 0.75rem', 
+                  backgroundColor: '#f8fafc', 
+                  padding: '0.65rem 0.85rem', 
                   borderRadius: '6px',
-                  borderLeft: isOverdue ? '3px solid #ef4444' : '3px solid #3b82f6'
+                  border: '1px solid #e2e8f0',
+                  borderLeft: isOverdue ? '3px solid #ef4444' : '3px solid #2563eb'
                 }}>
-                  <p style={{ margin: 0, fontSize: '0.8125rem', color: '#cbd5e1', lineHeight: 1.45 }}>
+                  <p style={{ margin: 0, fontSize: '0.8125rem', color: '#334155', lineHeight: 1.45 }}>
                     "{pendingFollowUp.note}"
                   </p>
                 </div>
@@ -386,7 +390,7 @@ export const LeadDetailPage: React.FC = () => {
                     type="button"
                     className="btn btn-secondary interactive-press"
                     onClick={() => setShowCompleteFollowUp(true)}
-                    style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem', color: '#34d399', borderColor: 'rgba(16, 185, 129, 0.3)' }}
+                    style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem', color: '#166534', borderColor: '#bbf7d0', backgroundColor: '#f0fdf4' }}
                   >
                     <CheckCircle2 size={13} />
                     <span>Mark Completed</span>

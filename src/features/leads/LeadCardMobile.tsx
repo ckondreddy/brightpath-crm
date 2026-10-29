@@ -31,10 +31,10 @@ export const LeadCardMobile: React.FC<LeadCardMobileProps> = ({ lead }) => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           <div className="student-avatar">{initials}</div>
           <div>
-            <div style={{ fontWeight: 600, color: '#f8fafc', fontSize: '0.875rem' }}>
+            <div style={{ fontWeight: 600, color: '#0f172a', fontSize: '0.875rem' }}>
               {lead.full_name}
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
+            <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
               {lead.course_interest}
             </div>
           </div>
@@ -46,30 +46,30 @@ export const LeadCardMobile: React.FC<LeadCardMobileProps> = ({ lead }) => {
         </span>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.75rem', color: '#94a3b8' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.75rem', color: '#64748b' }}>
         <a 
           href={`tel:${lead.phone}`} 
           onClick={(e) => e.stopPropagation()}
-          style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#60a5fa', textDecoration: 'none' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#2563eb', textDecoration: 'none' }}
         >
           <Phone size={12} />
           <span>{lead.phone}</span>
         </a>
 
         {lead.email && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#cbd5e1' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#475569' }}>
             <Mail size={12} />
             <span>{lead.email}</span>
           </div>
         )}
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#cbd5e1' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#475569' }}>
           <User size={12} />
           <span>Counsellor: {lead.assignee?.full_name || 'Unassigned'}</span>
         </div>
 
         {nextFollowUp && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: isOverdue ? '#f87171' : '#cbd5e1' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: isOverdue ? '#dc2626' : '#475569' }}>
             <Calendar size={12} />
             <span>Due: {new Date(nextFollowUp.due_at).toLocaleDateString()}</span>
             {isOverdue && <span className="overdue-tag">Overdue</span>}

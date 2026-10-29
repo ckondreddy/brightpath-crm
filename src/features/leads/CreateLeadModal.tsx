@@ -8,6 +8,8 @@ import {
   Sparkles
 } from 'lucide-react'
 import { useAuth } from '../../context/useAuth'
+import { useToast } from '../../context/useToast'
+import { useFocusTrap } from '../../hooks/useFocusTrap'
 import { Lead, LeadSource, UserProfile } from '../../types'
 import { 
   createLead, 
@@ -49,7 +51,20 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
   onSuccess
 }) => {
   const { user } = useAuth()
+  const toast = useToast()
   const nameInputRef = useRef<HTMLInputElement>(null)
+
+  const handleClose = () => {
+    if (isSubmitting) return
+    resetForm()
+    onClose()
+  }
+
+  const modalRef = useFocusTrap<HTMLDivElement>({
+    active: isOpen,
+    onClose: handleClose,
+    initialFocusSelector: '#studentFullName',
+  })
 
   // Form State
   const [fullName, setFullName] = useState('')
@@ -131,12 +146,6 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
     setSuccessLead(null)
   }
 
-  const handleClose = () => {
-    if (isSubmitting) return
-    resetForm()
-    onClose()
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setServerError(null)
@@ -167,12 +176,15 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
     setIsSubmitting(false)
 
     if (error || !data) {
-      setServerError(error || 'Failed to register enquiry. Please check connection.')
+      const msg = error || 'Failed to register enquiry. Please check connection.'
+      setServerError(msg)
+      toast.error(msg)
       return
     }
 
     // Success state
     setSuccessLead(data)
+    toast.success(`Enquiry registered for ${data.full_name}`)
     if (onSuccess) {
       onSuccess(data)
     }
@@ -192,6 +204,7 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
       aria-labelledby="modal-headline"
     >
       <div 
+        ref={modalRef}
         className="lead-modal-card" 
         onClick={(e) => e.stopPropagation()}
       >

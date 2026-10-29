@@ -153,16 +153,16 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                         <div className="student-avatar">{initials}</div>
                         <div>
-                          <div style={{ fontWeight: 600, color: '#f8fafc' }}>
+                          <div style={{ fontWeight: 600, color: '#0f172a' }}>
                             {lead.full_name}
                           </div>
-                          <div style={{ fontSize: '0.72rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                            <Phone size={10} style={{ color: '#60a5fa' }} />
+                          <div style={{ fontSize: '0.72rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <Phone size={10} style={{ color: '#2563eb' }} />
                             <span className="tabular-nums">{lead.phone}</span>
                             {lead.email && (
                               <>
                                 <span style={{ opacity: 0.4 }}>•</span>
-                                <span style={{ color: '#64748b' }}>{lead.email}</span>
+                                <span style={{ color: '#475569' }}>{lead.email}</span>
                               </>
                             )}
                           </div>
@@ -172,7 +172,7 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
 
                     {/* Program Track */}
                     <td>
-                      <span style={{ fontWeight: 500, color: '#cbd5e1' }}>
+                      <span style={{ fontWeight: 500, color: '#334155' }}>
                         {lead.course_interest}
                       </span>
                     </td>
@@ -183,9 +183,9 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                         fontSize: '0.72rem', 
                         padding: '2px 7px', 
                         borderRadius: '4px', 
-                        backgroundColor: 'rgba(255, 255, 255, 0.05)', 
-                        color: '#94a3b8',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        backgroundColor: '#f1f5f9', 
+                        color: '#475569',
+                        border: '1px solid #e2e8f0',
                         fontWeight: 500
                       }}>
                         {lead.source}
@@ -203,7 +203,7 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                     {/* Next Action / Follow-up */}
                     <td>
                       {pendingFollowUp ? (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', color: isOverdue ? '#f87171' : '#cbd5e1' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', color: isOverdue ? '#dc2626' : '#334155' }}>
                           <Calendar size={12} />
                           <span className="tabular-nums">{formatDate(pendingFollowUp.due_at)}</span>
                           {isOverdue && <span className="overdue-tag">Overdue</span>}
@@ -218,7 +218,7 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
 
                     {/* Counsellor */}
                     <td>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', color: '#cbd5e1' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', color: '#334155' }}>
                         <User size={12} style={{ color: '#64748b' }} />
                         <span>{lead.assignee?.full_name || 'Unassigned'}</span>
                       </div>

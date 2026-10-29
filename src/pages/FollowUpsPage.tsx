@@ -282,14 +282,14 @@ export const FollowUpsPage: React.FC = () => {
       ) : followUps.length === 0 ? (
         <div className="followups-empty-card">
           <CalendarClock size={36} style={{ color: '#64748b' }} />
-          <h3 style={{ fontSize: '1rem', color: '#f8fafc', margin: 0 }}>
+          <h3 style={{ fontSize: '1rem', color: '#0f172a', margin: 0 }}>
             {activeTab === 'overdue'
               ? 'No overdue callbacks!'
               : activeTab === 'today'
               ? 'No follow-ups scheduled for today'
               : 'No follow-up records found'}
           </h3>
-          <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0, maxWidth: '400px' }}>
+          <p style={{ fontSize: '0.8rem', color: '#64748b', margin: 0, maxWidth: '400px' }}>
             {activeTab === 'overdue'
               ? 'Excellent work! All student enquiries and callbacks are up to date.'
               : 'Schedule callbacks with prospective students to maintain high conversion momentum.'}

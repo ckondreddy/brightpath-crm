@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Calendar, X, AlertCircle, RefreshCw, Check } from 'lucide-react'
 import { useAuth } from '../../context/useAuth'
+import { useToast } from '../../context/useToast'
+import { useFocusTrap } from '../../hooks/useFocusTrap'
 import { rescheduleFollowUp } from '../../services/followupService'
 
 interface RescheduleFollowUpModalProps {
@@ -30,6 +32,11 @@ const RescheduleFollowUpModalInner: React.FC<Omit<RescheduleFollowUpModalProps, 
   onSuccess,
 }) => {
   const { user } = useAuth()
+  const toast = useToast()
+  const modalRef = useFocusTrap<HTMLDivElement>({
+    active: true,
+    onClose,
+  })
 
   // Default to tomorrow 10 AM
   const [newDueAt, setNewDueAt] = useState<string>(() => {
@@ -95,9 +102,11 @@ const RescheduleFollowUpModalInner: React.FC<Omit<RescheduleFollowUpModalProps, 
 
     if (result.error) {
       setErrorMessage(result.error)
+      toast.error(result.error)
       return
     }
 
+    toast.success(`Callback rescheduled for ${studentName}`)
     onSuccess()
     onClose()
   }
@@ -110,7 +119,12 @@ const RescheduleFollowUpModalInner: React.FC<Omit<RescheduleFollowUpModalProps, 
       aria-modal="true"
       aria-labelledby="reschedule-modal-title"
     >
-      <div className="lead-modal-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '480px' }}>
+      <div 
+        ref={modalRef}
+        className="lead-modal-card" 
+        onClick={(e) => e.stopPropagation()} 
+        style={{ maxWidth: '480px' }}
+      >
         {/* Header */}
         <div className="lead-modal-header">
           <div className="lead-modal-title-group">
