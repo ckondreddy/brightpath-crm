@@ -51,19 +51,19 @@ export const ChannelAttributionTable: React.FC<ChannelAttributionTableProps> = (
 
               return (
                 <tr key={c.source}>
-                  <td style={{ fontWeight: 600, color: '#f8fafc' }}>
+                  <td style={{ fontWeight: 600, color: '#0f172a' }}>
                     {c.source}
                   </td>
-                  <td className="tabular-nums" style={{ fontWeight: 600 }}>
+                  <td className="tabular-nums" style={{ fontWeight: 600, color: '#0f172a' }}>
                     {c.total}
                   </td>
-                  <td className="tabular-nums" style={{ color: '#94a3b8' }}>
+                  <td className="tabular-nums" style={{ color: '#64748b' }}>
                     {c.contacted}
                   </td>
-                  <td className="tabular-nums" style={{ color: '#c084fc' }}>
+                  <td className="tabular-nums" style={{ color: '#7c3aed', fontWeight: 600 }}>
                     {c.qualified}
                   </td>
-                  <td className="tabular-nums" style={{ fontWeight: 700, color: '#34d399' }}>
+                  <td className="tabular-nums" style={{ fontWeight: 700, color: '#059669' }}>
                     {c.converted}
                   </td>
                   <td>
@@ -78,7 +78,7 @@ export const ChannelAttributionTable: React.FC<ChannelAttributionTableProps> = (
                         className="tabular-nums"
                         style={{
                           fontWeight: 600,
-                          color: isHigh ? '#34d399' : isModerate ? '#60a5fa' : '#fbbf24',
+                          color: isHigh ? '#059669' : isModerate ? '#1d4ed8' : '#d97706',
                           fontSize: '0.75rem',
                         }}
                       >
@@ -93,8 +93,9 @@ export const ChannelAttributionTable: React.FC<ChannelAttributionTableProps> = (
                         fontSize: '0.75rem',
                         padding: '2px 6px',
                         borderRadius: '4px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                        color: '#94a3b8',
+                        backgroundColor: '#f1f5f9',
+                        color: '#475569',
+                        border: '1px solid #e2e8f0',
                       }}
                     >
                       {c.shareOfTotal}%

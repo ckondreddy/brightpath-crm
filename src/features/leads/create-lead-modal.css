@@ -1,11 +1,11 @@
-/* BrightPath CRM — Create Lead Modal (Linear/Attio Tier-1 Obsidian Caliber) */
+/* BrightPath CRM — Create & Edit Modal Dialog Styles (Clean Light Theme) */
 
 .lead-modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(4, 7, 14, 0.78);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,15 +26,12 @@
 .lead-modal-card {
   width: 100%;
   max-width: 620px;
-  background-color: #0c1222;
-  background-image: radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.08) 0px, transparent 50%),
-                    radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.6) 0px, transparent 50%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 14px;
   box-shadow: 
-    0 24px 48px -12px rgba(0, 0, 0, 0.75),
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -44,7 +41,7 @@
 @keyframes modalPopIn {
   from {
     opacity: 0;
-    transform: scale(0.96) translateY(10px);
+    transform: scale(0.96) translateY(8px);
   }
   to {
     opacity: 1;
@@ -55,11 +52,11 @@
 /* Modal Header */
 .lead-modal-header {
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.015);
+  background-color: #ffffff;
 }
 
 .lead-modal-title-group {
@@ -72,26 +69,26 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(30, 58, 138, 0.4));
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #60a5fa;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+  color: #2563eb;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.12);
 }
 
 .lead-modal-heading {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #f8fafc;
+  color: #0f172a;
   margin: 0;
   letter-spacing: -0.01em;
 }
 
 .lead-modal-subheading {
   font-size: 0.78rem;
-  color: #94a3b8;
+  color: #64748b;
   margin: 0.15rem 0 0 0;
 }
 
@@ -110,8 +107,8 @@
 }
 
 .lead-modal-close-btn:hover {
-  background-color: rgba(255, 255, 255, 0.06);
-  color: #f1f5f9;
+  background-color: #f1f5f9;
+  color: #0f172a;
 }
 
 /* Modal Form Body */
@@ -145,15 +142,15 @@
 
 .lead-field-label {
   font-size: 0.8rem;
-  font-weight: 500;
-  color: #cbd5e1;
+  font-weight: 600;
+  color: #334155;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .lead-field-required {
-  color: #f87171;
+  color: #ef4444;
   font-size: 0.75rem;
   margin-left: 0.2rem;
 }
@@ -163,10 +160,10 @@
 .lead-field-textarea {
   width: 100%;
   box-sizing: border-box;
-  background-color: #080d1a;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  color: #f8fafc;
+  color: #0f172a;
   padding: 0.6rem 0.75rem;
   font-size: 0.85rem;
   font-family: inherit;
@@ -177,9 +174,9 @@
 .lead-field-select:focus,
 .lead-field-textarea:focus {
   outline: none;
-  background-color: #0b1122;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+  background-color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .lead-field-input.has-error,
@@ -191,7 +188,7 @@
 
 .lead-field-error-hint {
   font-size: 0.72rem;
-  color: #f87171;
+  color: #ef4444;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -199,8 +196,8 @@
 }
 
 .lead-field-select option {
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: #ffffff;
+  color: #0f172a;
   padding: 0.4rem;
 }
 
@@ -212,11 +209,11 @@
 
 /* Banner feedback */
 .lead-modal-error-banner {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
   border-radius: 8px;
   padding: 0.65rem 0.85rem;
-  color: #fca5a5;
+  color: #991b1b;
   font-size: 0.8rem;
   display: flex;
   align-items: center;
@@ -224,11 +221,11 @@
 }
 
 .lead-modal-success-banner {
-  background-color: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
   border-radius: 8px;
   padding: 0.65rem 0.85rem;
-  color: #6ee7b7;
+  color: #166534;
   font-size: 0.8rem;
   display: flex;
   align-items: center;
@@ -238,8 +235,8 @@
 /* Modal Footer */
 .lead-modal-footer {
   padding: 1rem 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  background-color: rgba(255, 255, 255, 0.015);
+  border-top: 1px solid #e2e8f0;
+  background-color: #f8fafc;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -248,10 +245,10 @@
 
 .lead-modal-cancel-btn {
   padding: 0.55rem 1rem;
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  color: #cbd5e1;
+  color: #475569;
   font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
@@ -259,14 +256,14 @@
 }
 
 .lead-modal-cancel-btn:hover {
-  background-color: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
+  background-color: #f1f5f9;
+  color: #0f172a;
 }
 
 .lead-modal-submit-btn {
   padding: 0.55rem 1.25rem;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  background-color: #2563eb;
+  border: 1px solid #1d4ed8;
   border-radius: 8px;
   color: #ffffff;
   font-size: 0.82rem;
@@ -275,13 +272,13 @@
   align-items: center;
   gap: 0.4rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25);
   transition: all 0.15s ease;
 }
 
 .lead-modal-submit-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+  background-color: #1d4ed8;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);
   transform: translateY(-1px);
 }
 

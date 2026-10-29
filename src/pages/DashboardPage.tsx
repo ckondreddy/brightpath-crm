@@ -94,7 +94,7 @@ export const DashboardPage: React.FC = () => {
 
         {/* Range Selector & Action CTAs */}
         <div className="dashboard-header-actions">
-          <div className="segmented-control" style={{ backgroundColor: '#090d16' }}>
+          <div className="segmented-control">
             <button
               type="button"
               className={`segmented-item ${timeRange === 'month' ? 'active' : ''}`}
@@ -227,10 +227,10 @@ export const DashboardPage: React.FC = () => {
       <div className="dashboard-funnel-card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <h2 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#f8fafc', margin: 0 }}>
+            <h2 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>
               Pipeline Stage Conversion Funnel
             </h2>
-            <p style={{ fontSize: '0.725rem', color: '#94a3b8', margin: '2px 0 0 0' }}>
+            <p style={{ fontSize: '0.725rem', color: '#64748b', margin: '2px 0 0 0' }}>
               Distribution of prospective students across admission stages
             </p>
           </div>
@@ -301,14 +301,14 @@ export const DashboardPage: React.FC = () => {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
                         <Link
                           to={`/leads/${task.lead_id}`}
-                          style={{ fontSize: '0.825rem', fontWeight: 600, color: '#f8fafc', textDecoration: 'none' }}
+                          style={{ fontSize: '0.825rem', fontWeight: 600, color: '#0f172a', textDecoration: 'none' }}
                         >
                           {studentName}
                         </Link>
                         {isOverdue && <span className="overdue-tag">Overdue</span>}
                       </div>
 
-                      <div style={{ fontSize: '0.75rem', color: '#94a3b8', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                      <div style={{ fontSize: '0.75rem', color: '#475569', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
                         "{task.note}"
                       </div>
 
@@ -321,7 +321,7 @@ export const DashboardPage: React.FC = () => {
                       <a
                         href={`tel:${phone}`}
                         className="btn btn-secondary interactive-press"
-                        style={{ padding: '0.3rem 0.6rem', fontSize: '0.725rem', gap: '0.3rem', color: '#60a5fa', textDecoration: 'none' }}
+                        style={{ padding: '0.3rem 0.6rem', fontSize: '0.725rem', gap: '0.3rem', color: '#2563eb', textDecoration: 'none' }}
                       >
                         <PhoneCall size={12} />
                         <span>Call</span>
@@ -352,8 +352,8 @@ export const DashboardPage: React.FC = () => {
               return (
                 <div key={track.course} className="course-track-row">
                   <div className="course-track-top">
-                    <span style={{ fontWeight: 600, color: '#f1f5f9' }}>{track.course}</span>
-                    <span className="tabular-nums" style={{ color: '#94a3b8', fontSize: '0.75rem' }}>
+                    <span style={{ fontWeight: 600, color: '#0f172a' }}>{track.course}</span>
+                    <span className="tabular-nums" style={{ color: '#64748b', fontSize: '0.75rem' }}>
                       {track.enquiries} leads ({track.enrolled} enrolled • {track.conversionRate}%)
                     </span>
                   </div>
@@ -402,8 +402,8 @@ export const DashboardPage: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '0.65rem 0.85rem',
-                  backgroundColor: '#0d1527',
-                  border: '1px solid rgba(255,255,255,0.06)',
+                  backgroundColor: '#f8fafc',
+                  border: '1px solid #e2e8f0',
                   borderRadius: '8px',
                   flexWrap: 'wrap',
                   gap: '0.75rem',
@@ -416,11 +416,11 @@ export const DashboardPage: React.FC = () => {
                   <div>
                     <Link
                       to={`/leads/${lead.id}`}
-                      style={{ fontSize: '0.85rem', fontWeight: 600, color: '#f8fafc', textDecoration: 'none' }}
+                      style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a', textDecoration: 'none' }}
                     >
                       {lead.full_name}
                     </Link>
-                    <div style={{ fontSize: '0.725rem', color: '#94a3b8' }}>
+                    <div style={{ fontSize: '0.725rem', color: '#64748b' }}>
                       {lead.course_interest} • Source: {lead.source}
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-/* BrightPath CRM — Lead Detail & Status Lifecycle Styles */
+/* BrightPath CRM — Lead Detail & Status Lifecycle Styles (Clean Light Theme) */
 
 .lead-detail-layout {
   display: flex;
@@ -12,35 +12,36 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.8125rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .breadcrumb-back-link {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  color: #94a3b8;
+  color: #64748b;
   text-decoration: none;
+  font-weight: 500;
   transition: color 0.15s ease;
 }
 
 .breadcrumb-back-link:hover {
-  color: #f8fafc;
+  color: #0f172a;
 }
 
 .breadcrumb-separator {
-  color: #475569;
+  color: #cbd5e1;
 }
 
 .breadcrumb-current {
-  color: #f8fafc;
-  font-weight: 500;
+  color: #0f172a;
+  font-weight: 600;
 }
 
 /* Header Dossier Card */
 .lead-hero-card {
-  background-color: #0b1120;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   display: flex;
@@ -48,7 +49,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .lead-hero-profile {
@@ -61,21 +62,21 @@
   width: 50px;
   height: 50px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(30, 58, 138, 0.4));
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.15rem;
   font-weight: 700;
-  color: #93c5fd;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  color: #2563eb;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
 }
 
 .lead-hero-title {
   font-size: 1.35rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
   margin: 0 0 0.25rem 0;
   letter-spacing: -0.02em;
 }
@@ -85,7 +86,7 @@
   align-items: center;
   gap: 0.75rem;
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: #64748b;
   flex-wrap: wrap;
 }
 
@@ -98,8 +99,8 @@
 
 /* Status Lifecycle Pipeline Stepper */
 .status-stepper-card {
-  background-color: #070c17;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 1rem 1.25rem;
   display: flex;
@@ -107,15 +108,16 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .status-stepper-track {
   display: inline-flex;
   align-items: center;
-  background-color: #0b1120;
+  background-color: #f1f5f9;
   padding: 4px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #e2e8f0;
   gap: 4px;
   overflow-x: auto;
   max-width: 100%;
@@ -123,12 +125,12 @@
 
 .status-step-btn {
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 7px;
   padding: 0.45rem 0.85rem;
   font-size: 0.78rem;
   font-weight: 500;
-  color: #94a3b8;
+  color: #64748b;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -138,43 +140,44 @@
 }
 
 .status-step-btn:hover:not(:disabled) {
-  color: #f1f5f9;
-  background-color: rgba(255, 255, 255, 0.04);
+  color: #0f172a;
+  background-color: #e2e8f0;
 }
 
 .status-step-btn.is-current {
-  background-color: #1e293b;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #0f172a;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
 }
 
 .status-step-btn.is-completed {
-  color: #93c5fd;
+  color: #2563eb;
 }
 
 .status-step-btn.is-current.stage-New {
-  background-color: rgba(234, 179, 8, 0.2);
-  color: #fde047;
-  border: 1px solid rgba(234, 179, 8, 0.3);
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
 }
 
 .status-step-btn.is-current.stage-Contacted {
-  background-color: rgba(56, 189, 248, 0.2);
-  color: #7dd3fc;
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
 }
 
 .status-step-btn.is-current.stage-Qualified {
-  background-color: rgba(168, 85, 247, 0.2);
-  color: #d8b4fe;
-  border: 1px solid rgba(168, 85, 247, 0.3);
+  background-color: #f3e8ff;
+  color: #6b21a8;
+  border: 1px solid #e9d5ff;
 }
 
 .status-step-btn.is-current.stage-Converted {
-  background-color: rgba(16, 185, 129, 0.2);
-  color: #6ee7b7;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
 }
 
 .status-stepper-extra {
@@ -184,9 +187,9 @@
 }
 
 .mark-lost-btn {
-  background-color: transparent;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #fca5a5;
+  background-color: #ffffff;
+  border: 1px solid #fecaca;
+  color: #dc2626;
   border-radius: 8px;
   padding: 0.4rem 0.8rem;
   font-size: 0.78rem;
@@ -199,15 +202,15 @@
 }
 
 .mark-lost-btn:hover {
-  background-color: rgba(239, 68, 68, 0.12);
-  border-color: rgba(239, 68, 68, 0.5);
-  color: #ffffff;
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+  color: #b91c1c;
 }
 
 /* Lost Status Alert Banner */
 .lost-reason-banner {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
   border-radius: 10px;
   padding: 0.85rem 1.25rem;
   display: flex;
@@ -215,7 +218,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.75rem;
-  color: #fca5a5;
+  color: #991b1b;
   font-size: 0.82rem;
 }
 
@@ -234,28 +237,28 @@
 
 /* Card Styling */
 .lead-section-card {
-  background-color: #0b1120;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .lead-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid #f1f5f9;
   padding-bottom: 0.65rem;
 }
 
 .lead-section-title {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #f8fafc;
+  color: #0f172a;
   display: flex;
   align-items: center;
   gap: 0.45rem;
@@ -291,13 +294,13 @@
 
 .lead-kv-value {
   font-size: 0.85rem;
-  color: #e2e8f0;
+  color: #1e293b;
   font-weight: 500;
   word-break: break-word;
 }
 
 .lead-kv-value a {
-  color: #60a5fa;
+  color: #2563eb;
   text-decoration: none;
 }
 
@@ -321,7 +324,7 @@
   top: 10px;
   bottom: 10px;
   width: 2px;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: #e2e8f0;
 }
 
 .timeline-item {
@@ -343,58 +346,59 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background-color: #0b1120;
-  border: 2px solid #3b82f6;
+  background-color: #ffffff;
+  border: 2px solid #2563eb;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #60a5fa;
+  color: #2563eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .timeline-node.status_updated {
-  border-color: #a855f7;
-  color: #c084fc;
+  border-color: #8b5cf6;
+  color: #7c3aed;
 }
 
 .timeline-node.lead_created {
   border-color: #10b981;
-  color: #34d399;
+  color: #059669;
 }
 
 .timeline-node.note_added {
   border-color: #f59e0b;
-  color: #fbbf24;
+  color: #d97706;
 }
 
 .timeline-node.follow_up_scheduled {
-  border-color: #38bdf8;
-  color: #38bdf8;
+  border-color: #0284c7;
+  color: #0284c7;
 }
 
 .timeline-node.follow_up_completed {
   border-color: #10b981;
-  color: #34d399;
+  color: #059669;
 }
 
 .timeline-node.lead_edited {
   border-color: #6366f1;
-  color: #818cf8;
+  color: #4f46e5;
 }
 
 .timeline-desc {
   font-size: 0.8125rem;
-  color: #f1f5f9;
+  color: #1e293b;
   font-weight: 500;
   line-height: 1.4;
 }
 
 .timeline-note-callout {
-  background-color: rgba(245, 158, 11, 0.05);
+  background-color: #fffbeb;
   border-left: 2px solid #f59e0b;
   padding: 0.35rem 0.6rem;
   border-radius: 4px;
   font-size: 0.8rem;
-  color: #fde68a;
+  color: #92400e;
   margin-top: 0.2rem;
   line-height: 1.45;
 }
@@ -410,8 +414,8 @@
 
 /* Add Note Box Styling */
 .add-note-box {
-  background-color: #0d1527;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 0.75rem 0.85rem;
   margin-bottom: 0.85rem;
@@ -422,8 +426,8 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  background-color: #090d16;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
   padding: 2px;
   width: fit-content;
@@ -436,19 +440,19 @@
   padding: 0.2rem 0.5rem;
   border: none;
   background: transparent;
-  color: #94a3b8;
+  color: #64748b;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .timeline-filter-btn:hover {
-  color: #f8fafc;
+  color: #0f172a;
 }
 
 .timeline-filter-btn.active {
-  background-color: #1e293b;
-  color: #f8fafc;
+  background-color: #ffffff;
+  color: #0f172a;
   font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
-

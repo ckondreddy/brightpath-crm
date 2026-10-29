@@ -15,7 +15,7 @@ export const ReportsKpiGrid: React.FC<ReportsKpiGridProps> = ({ summary }) => {
       <div className="reports-kpi-card">
         <div className="reports-kpi-label-row">
           <span className="reports-kpi-label">Admissions Conversion Rate</span>
-          <Target size={15} color="#60a5fa" />
+          <Target size={15} color="#2563eb" />
         </div>
         <div className="reports-kpi-value-row">
           <span className="reports-kpi-value">{summary.conversionRate}%</span>
@@ -32,7 +32,7 @@ export const ReportsKpiGrid: React.FC<ReportsKpiGridProps> = ({ summary }) => {
       <div className="reports-kpi-card">
         <div className="reports-kpi-label-row">
           <span className="reports-kpi-label">Avg Counselling Velocity</span>
-          <TrendingUp size={15} color="#34d399" />
+          <TrendingUp size={15} color="#059669" />
         </div>
         <div className="reports-kpi-value-row">
           <span className="reports-kpi-value">{summary.avgCycleDays} Days</span>
@@ -49,7 +49,7 @@ export const ReportsKpiGrid: React.FC<ReportsKpiGridProps> = ({ summary }) => {
       <div className="reports-kpi-card">
         <div className="reports-kpi-label-row">
           <span className="reports-kpi-label">Top Intake Channel</span>
-          <Compass size={15} color="#fbbf24" />
+          <Compass size={15} color="#d97706" />
         </div>
         <div className="reports-kpi-value-row">
           <span className="reports-kpi-value" style={{ fontSize: '1.25rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -70,13 +70,13 @@ export const ReportsKpiGrid: React.FC<ReportsKpiGridProps> = ({ summary }) => {
       <div className="reports-kpi-card">
         <div className="reports-kpi-label-row">
           <span className="reports-kpi-label">Outcome Distribution</span>
-          <Scale size={15} color="#a78bfa" />
+          <Scale size={15} color="#7c3aed" />
         </div>
         <div className="reports-kpi-value-row">
           <span className="reports-kpi-value" style={{ fontSize: '1.35rem' }}>
-            <span style={{ color: '#34d399' }}>{summary.convertedCount}</span>
+            <span style={{ color: '#059669' }}>{summary.convertedCount}</span>
             <span style={{ color: '#64748b', margin: '0 0.35rem' }}>:</span>
-            <span style={{ color: '#f87171' }}>{summary.lostCount}</span>
+            <span style={{ color: '#dc2626' }}>{summary.lostCount}</span>
           </span>
           <span className="reports-kpi-pill pill-warning">
             {summary.lostRate}% Lost Rate

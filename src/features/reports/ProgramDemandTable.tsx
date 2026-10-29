@@ -49,13 +49,13 @@ export const ProgramDemandTable: React.FC<ProgramDemandTableProps> = ({ programs
 
               return (
                 <tr key={p.course}>
-                  <td style={{ fontWeight: 600, color: '#f8fafc' }}>
+                  <td style={{ fontWeight: 600, color: '#0f172a' }}>
                     {p.course}
                   </td>
-                  <td className="tabular-nums" style={{ fontWeight: 600 }}>
+                  <td className="tabular-nums" style={{ fontWeight: 600, color: '#0f172a' }}>
                     {p.enquiries}
                   </td>
-                  <td className="tabular-nums" style={{ fontWeight: 700, color: '#34d399' }}>
+                  <td className="tabular-nums" style={{ fontWeight: 700, color: '#059669' }}>
                     {p.converted}
                   </td>
                   <td>
@@ -70,7 +70,7 @@ export const ProgramDemandTable: React.FC<ProgramDemandTableProps> = ({ programs
                         className="tabular-nums"
                         style={{
                           fontWeight: 600,
-                          color: isHigh ? '#34d399' : isModerate ? '#60a5fa' : '#fbbf24',
+                          color: isHigh ? '#059669' : isModerate ? '#1d4ed8' : '#d97706',
                           fontSize: '0.75rem',
                         }}
                       >
@@ -85,8 +85,9 @@ export const ProgramDemandTable: React.FC<ProgramDemandTableProps> = ({ programs
                         fontSize: '0.75rem',
                         padding: '2px 6px',
                         borderRadius: '4px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                        color: '#94a3b8',
+                        backgroundColor: '#f1f5f9',
+                        color: '#475569',
+                        border: '1px solid #e2e8f0',
                       }}
                     >
                       {p.shareOfPipeline}%

@@ -64,17 +64,17 @@ export const LostReasonBreakdown: React.FC<LostReasonBreakdownProps> = ({
         style={{
           marginTop: '0.5rem',
           padding: '0.75rem 1rem',
-          backgroundColor: 'rgba(255, 255, 255, 0.03)',
-          border: '1px solid rgba(255, 255, 255, 0.06)',
+          backgroundColor: '#f8fafc',
+          border: '1px solid #e2e8f0',
           borderRadius: '8px',
           display: 'flex',
           alignItems: 'center',
           gap: '0.5rem',
           fontSize: '0.75rem',
-          color: '#94a3b8',
+          color: '#475569',
         }}
       >
-        <HelpCircle size={14} color="#60a5fa" style={{ flexShrink: 0 }} />
+        <HelpCircle size={14} color="#2563eb" style={{ flexShrink: 0 }} />
         <span>
           <strong>Academy Leadership Note:</strong> Mandatory lost reason tracking was activated in Phase 07. Counsellors cannot archive a lead as 'Lost' without capturing the root objection.
         </span>

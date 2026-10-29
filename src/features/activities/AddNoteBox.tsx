@@ -51,7 +51,7 @@ export const AddNoteBox: React.FC<AddNoteBoxProps> = ({ leadId, onNoteAdded }) =
     <div className="add-note-box">
       <form onSubmit={handleSubmit}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#94a3b8', fontSize: '0.75rem', fontWeight: 600 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#64748b', fontSize: '0.75rem', fontWeight: 600 }}>
             <MessageSquare size={13} style={{ color: '#f59e0b' }} />
             <span>Quick Log Counsellor Note</span>
           </div>
@@ -64,7 +64,7 @@ export const AddNoteBox: React.FC<AddNoteBoxProps> = ({ leadId, onNoteAdded }) =
             onChange={(e) => setNoteText(e.target.value)}
             onFocus={() => setIsExpanded(true)}
             disabled={isSubmitting}
-            style={{ fontSize: '0.8rem', padding: '0.5rem 0.65rem', backgroundColor: '#090d16' }}
+            style={{ fontSize: '0.8rem', padding: '0.5rem 0.65rem', backgroundColor: '#ffffff', color: '#0f172a', borderColor: '#cbd5e1' }}
           />
 
           {errorMessage && (

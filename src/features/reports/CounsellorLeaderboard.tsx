@@ -62,7 +62,7 @@ export const CounsellorLeaderboard: React.FC<CounsellorLeaderboardProps> = ({ co
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <span className="counsellor-avatar-chip">{initials}</span>
                       <div>
-                        <div style={{ fontWeight: 600, color: '#f8fafc' }}>
+                        <div style={{ fontWeight: 600, color: '#0f172a' }}>
                           {c.counsellorName}
                         </div>
                         <div style={{ fontSize: '0.7rem', color: '#64748b' }}>
@@ -71,16 +71,16 @@ export const CounsellorLeaderboard: React.FC<CounsellorLeaderboardProps> = ({ co
                       </div>
                     </div>
                   </td>
-                  <td className="tabular-nums" style={{ fontWeight: 600 }}>
+                  <td className="tabular-nums" style={{ fontWeight: 600, color: '#0f172a' }}>
                     {c.assignedLeads}
                   </td>
-                  <td className="tabular-nums" style={{ fontWeight: 700, color: '#34d399' }}>
+                  <td className="tabular-nums" style={{ fontWeight: 700, color: '#059669' }}>
                     {c.converted}
                   </td>
-                  <td className="tabular-nums" style={{ color: '#60a5fa' }}>
+                  <td className="tabular-nums" style={{ color: '#2563eb', fontWeight: 600 }}>
                     {c.active}
                   </td>
-                  <td className="tabular-nums" style={{ color: '#f87171' }}>
+                  <td className="tabular-nums" style={{ color: '#dc2626', fontWeight: 600 }}>
                     {c.lost}
                   </td>
                   <td>
@@ -91,13 +91,13 @@ export const CounsellorLeaderboard: React.FC<CounsellorLeaderboardProps> = ({ co
                           style={{ width: `${Math.min(100, c.conversionRate)}%` }}
                         />
                       </div>
-                      <span className="tabular-nums" style={{ fontWeight: 600, color: '#34d399', fontSize: '0.75rem' }}>
+                      <span className="tabular-nums" style={{ fontWeight: 600, color: '#059669', fontSize: '0.75rem' }}>
                         {c.conversionRate}%
                       </span>
                     </div>
                   </td>
                   <td>
-                    <span className="tabular-nums" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', color: '#94a3b8' }}>
+                    <span className="tabular-nums" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', color: '#475569' }}>
                       <Clock size={12} /> {c.avgCycleDays}d
                     </span>
                   </td>

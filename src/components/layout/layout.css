@@ -6,15 +6,15 @@
   background-color: var(--bg-app);
 }
 
-/* Sidebar: Obsidian Tier-1 Startup Aesthetic */
+/* Sidebar: Clean Tier-1 Startup Palette (Light Slate) */
 .app-sidebar {
   width: 252px;
-  background-color: var(--color-obsidian-900);
-  color: #f8fafc;
+  background-color: #ffffff;
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  border-right: 1px solid var(--sidebar-border);
+  border-right: 1px solid var(--border-default);
   transition: transform var(--transition-normal);
   z-index: 50;
 }
@@ -25,26 +25,26 @@
   align-items: center;
   gap: 0.65rem;
   padding: 0.85rem 1rem;
-  border-bottom: 1px solid var(--sidebar-border);
+  border-bottom: 1px solid var(--border-default);
   cursor: pointer;
   transition: background-color var(--transition-fast);
 }
 
 .workspace-switcher:hover {
-  background-color: var(--sidebar-item-hover);
+  background-color: #f8fafc;
 }
 
 .workspace-icon {
   width: 32px;
   height: 32px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+  border: 1px solid rgba(37, 99, 235, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25);
   flex-shrink: 0;
 }
 
@@ -59,7 +59,7 @@
 .workspace-name {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #ffffff;
+  color: #0f172a;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -75,7 +75,7 @@
 }
 
 .workspace-chevron {
-  color: #64748b;
+  color: #94a3b8;
   flex-shrink: 0;
 }
 
@@ -91,8 +91,8 @@
 
 .nav-group-title {
   font-size: 0.65rem;
-  font-weight: 600;
-  color: #475569;
+  font-weight: 700;
+  color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 0 0.65rem;
@@ -113,7 +113,7 @@
   border-radius: var(--radius-sm);
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #94a3b8;
+  color: #475569;
   transition: all var(--transition-fast);
   border: 1px solid transparent;
 }
@@ -125,37 +125,38 @@
 }
 
 .nav-link:hover {
-  background-color: var(--sidebar-item-hover);
-  color: #f1f5f9;
+  background-color: #f1f5f9;
+  color: #0f172a;
 }
 
 .nav-link.active {
-  background-color: var(--sidebar-item-active);
-  color: #ffffff;
-  border-color: rgba(37, 99, 235, 0.3);
+  background-color: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+  border-color: rgba(37, 99, 235, 0.2);
   font-weight: 600;
 }
 
 .nav-pill {
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 600;
   padding: 1px 6px;
   border-radius: var(--radius-full);
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
 }
 
 .nav-pill.alert {
-  background-color: rgba(225, 29, 72, 0.2);
-  color: #fda4af;
-  border: 1px solid rgba(225, 29, 72, 0.3);
+  background-color: #fff1f2;
+  color: #e11d48;
+  border: 1px solid #fecdd3;
 }
 
 /* Sidebar Footer: Counsellor Presence */
 .sidebar-footer {
   padding: 0.85rem 1rem;
-  border-top: 1px solid var(--sidebar-border);
-  background-color: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid var(--border-default);
+  background-color: #f8fafc;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -172,9 +173,9 @@
   width: 28px;
   height: 28px;
   border-radius: var(--radius-full);
-  background: var(--color-obsidian-700);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #e2e8f0;
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -192,7 +193,7 @@
   height: 8px;
   border-radius: var(--radius-full);
   background-color: var(--semantic-emerald);
-  border: 1.5px solid var(--color-obsidian-900);
+  border: 1.5px solid #ffffff;
 }
 
 .presence-info {
@@ -205,7 +206,7 @@
 .presence-name {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: #0f172a;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -1,6 +1,6 @@
 /* ==========================================================================
    BrightPath CRM — Follow-Ups & Task Schedule Engine
-   Obsidian Dark Minimalist Palette (Attio / Linear Standard)
+   Clean Modern SaaS Light Palette (High Legibility & Plain Colors)
    ========================================================================== */
 
 .followups-container {
@@ -34,14 +34,14 @@
 .followups-title {
   font-size: 1.35rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
   letter-spacing: -0.02em;
   margin: 0;
 }
 
 .followups-subtitle {
   font-size: 0.8125rem;
-  color: #94a3b8;
+  color: #64748b;
   margin: 0;
 }
 
@@ -54,9 +54,9 @@
   font-size: 0.725rem;
   font-weight: 600;
   border-radius: 9999px;
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: #fff1f2;
+  color: #b91c1c;
+  border: 1px solid #fecdd3;
   font-variant-numeric: tabular-nums;
 }
 
@@ -73,8 +73,8 @@
 .followup-tabs {
   display: inline-flex;
   align-items: center;
-  background-color: #0b1120;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 3px;
   gap: 2px;
@@ -89,7 +89,7 @@
   padding: 0.35rem 0.75rem;
   font-size: 0.78rem;
   font-weight: 500;
-  color: #94a3b8;
+  color: #64748b;
   background: transparent;
   border: none;
   border-radius: 6px;
@@ -99,30 +99,31 @@
 }
 
 .followup-tab-btn:hover {
-  color: #f8fafc;
-  background-color: rgba(255, 255, 255, 0.04);
+  color: #0f172a;
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .followup-tab-btn.active {
-  color: #f8fafc;
-  background-color: #1e293b;
+  color: #0f172a;
+  background-color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.08), 0 0 0 1px rgba(16, 24, 40, 0.04);
 }
 
 .followup-tab-count {
   font-size: 0.7rem;
   padding: 0.1rem 0.4rem;
   border-radius: 9999px;
-  background-color: rgba(255, 255, 255, 0.06);
-  color: #cbd5e1;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
   font-variant-numeric: tabular-nums;
 }
 
 .followup-tab-count.alert {
-  background-color: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: #fff1f2;
+  color: #b91c1c;
+  border: 1px solid #fecdd3;
 }
 
 /* Right Filter Dropdowns / Search */
@@ -134,19 +135,20 @@
 }
 
 .followup-search-input {
-  background-color: #0b1120;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
   padding: 0.35rem 0.65rem 0.35rem 2rem;
   font-size: 0.78rem;
-  color: #f8fafc;
+  color: #0f172a;
   outline: none;
   width: 200px;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .followup-search-input:focus {
-  border-color: #3b82f6;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
 .followup-search-box {
@@ -158,7 +160,7 @@
 .followup-search-icon {
   position: absolute;
   left: 0.6rem;
-  color: #64748b;
+  color: #94a3b8;
   pointer-events: none;
 }
 
@@ -172,8 +174,8 @@
 /* Individual Follow-up Card */
 .followup-card {
   position: relative;
-  background-color: #0d1527;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 0.95rem 1.15rem;
   display: flex;
@@ -181,18 +183,19 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
   transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .followup-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
 }
 
 /* Border Status Strip */
 .followup-card.is-overdue {
   border-left: 3px solid #ef4444;
-  background: linear-gradient(90deg, rgba(239, 68, 68, 0.04) 0%, #0d1527 100%);
+  background: linear-gradient(90deg, #fff5f5 0%, #ffffff 100%);
 }
 
 .followup-card.is-today {
@@ -200,7 +203,7 @@
 }
 
 .followup-card.is-upcoming {
-  border-left: 3px solid #3b82f6;
+  border-left: 3px solid #2563eb;
 }
 
 .followup-card.is-completed {
@@ -220,15 +223,15 @@
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background-color: #1e293b;
-  color: #93c5fd;
+  background-color: #f1f5f9;
+  color: #1d4ed8;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 700;
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid #cbd5e1;
 }
 
 .followup-details {
@@ -247,30 +250,32 @@
 .followup-student-link {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #f8fafc;
+  color: #0f172a;
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
 .followup-student-link:hover {
-  color: #60a5fa;
+  color: #2563eb;
   text-decoration: underline;
 }
 
 .followup-course-tag {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .followup-note-text {
   font-size: 0.8125rem;
-  color: #cbd5e1;
+  color: #334155;
   margin: 0.15rem 0;
   line-height: 1.45;
-  background-color: rgba(255, 255, 255, 0.02);
-  padding: 0.3rem 0.55rem;
+  background-color: #f8fafc;
+  padding: 0.35rem 0.65rem;
   border-radius: 4px;
-  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  border-left: 2px solid #2563eb;
+  border: 1px solid #e2e8f0;
+  border-left-width: 3px;
 }
 
 .followup-meta-row {
@@ -290,19 +295,19 @@
 }
 
 .followup-time-pill.text-overdue {
-  color: #f87171;
+  color: #b91c1c;
 }
 
 .followup-time-pill.text-today {
-  color: #fbbf24;
+  color: #b45309;
 }
 
 .followup-time-pill.text-upcoming {
-  color: #93c5fd;
+  color: #1d4ed8;
 }
 
 .followup-time-pill.text-completed {
-  color: #34d399;
+  color: #047857;
 }
 
 /* Card Action Buttons */
@@ -319,18 +324,18 @@
   gap: 0.35rem;
   padding: 0.35rem 0.65rem;
   font-size: 0.775rem;
-  font-weight: 500;
-  color: #34d399;
-  background-color: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  font-weight: 600;
+  color: #047857;
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .followup-btn-done:hover {
-  background-color: rgba(16, 185, 129, 0.2);
-  border-color: rgba(16, 185, 129, 0.4);
+  background-color: #d1fae5;
+  border-color: #6ee7b7;
 }
 
 .followup-btn-reschedule {
@@ -340,17 +345,18 @@
   padding: 0.35rem 0.65rem;
   font-size: 0.775rem;
   font-weight: 500;
-  color: #cbd5e1;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #334155;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .followup-btn-reschedule:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #f8fafc;
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
 }
 
 .followup-call-link {
@@ -359,17 +365,17 @@
   gap: 0.35rem;
   padding: 0.35rem 0.65rem;
   font-size: 0.775rem;
-  font-weight: 500;
-  color: #60a5fa;
-  background-color: rgba(37, 99, 235, 0.1);
-  border: 1px solid rgba(37, 99, 235, 0.25);
+  font-weight: 600;
+  color: #1d4ed8;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 6px;
   text-decoration: none;
   transition: all 0.15s ease;
 }
 
 .followup-call-link:hover {
-  background-color: rgba(37, 99, 235, 0.2);
+  background-color: #dbeafe;
 }
 
 /* Preset Tag Buttons in Modals */
@@ -383,24 +389,24 @@
 .preset-tag-btn {
   font-size: 0.72rem;
   padding: 0.25rem 0.5rem;
-  background-color: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #cbd5e1;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .preset-tag-btn:hover {
-  background-color: #334155;
-  color: #f8fafc;
-  border-color: rgba(255, 255, 255, 0.2);
+  background-color: #e2e8f0;
+  color: #0f172a;
+  border-color: #94a3b8;
 }
 
 /* Empty State */
 .followups-empty-card {
-  background-color: #0d1527;
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  background-color: #ffffff;
+  border: 1px dashed #cbd5e1;
   border-radius: 8px;
   padding: 3rem 1.5rem;
   text-align: center;

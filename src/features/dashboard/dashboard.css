@@ -1,6 +1,6 @@
 /* ==========================================================================
    BrightPath CRM — Executive Dashboard & Live Metric Reconciliation
-   Obsidian Dark Minimalist Palette (Attio / Linear Standard)
+   Clean Modern SaaS Light Palette (High Legibility & Plain Colors)
    ========================================================================== */
 
 .dashboard-container {
@@ -28,7 +28,7 @@
 .dashboard-campus-pill {
   font-size: 0.725rem;
   font-weight: 600;
-  color: #60a5fa;
+  color: #2563eb;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   display: inline-flex;
@@ -39,7 +39,7 @@
 .dashboard-title {
   font-size: 1.35rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
   letter-spacing: -0.02em;
   margin: 0;
 }
@@ -51,17 +51,52 @@
   flex-wrap: wrap;
 }
 
+/* Segmented Control */
+.segmented-control {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.segmented-item {
+  background: transparent;
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #64748b;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.segmented-item:hover {
+  color: #0f172a;
+}
+
+.segmented-item.active {
+  background-color: #ffffff;
+  color: #0f172a;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.08), 0 0 0 1px rgba(16, 24, 40, 0.04);
+}
+
 /* Overdue Urgent Banner */
 .dashboard-alert-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.28);
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
   border-radius: 8px;
   font-size: 0.8125rem;
-  color: #fca5a5;
+  color: #991b1b;
   gap: 0.75rem;
   flex-wrap: wrap;
 }
@@ -70,7 +105,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  color: #f87171;
+  color: #b91c1c;
   font-weight: 600;
   text-decoration: underline;
   transition: opacity 0.15s ease;
@@ -88,19 +123,20 @@
 }
 
 .dashboard-kpi-card {
-  background-color: #0b1120;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 1.15rem 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.4);
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04), 0 1px 2px rgba(16, 24, 40, 0.02);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 .dashboard-kpi-card:hover {
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
   transform: translateY(-1px);
 }
 
@@ -114,13 +150,13 @@
 .dashboard-kpi-label {
   font-size: 0.725rem;
   font-weight: 600;
-  color: #94a3b8;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .dashboard-kpi-icon {
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .dashboard-kpi-value-row {
@@ -132,7 +168,7 @@
 .dashboard-kpi-value {
   font-size: 1.85rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
   font-variant-numeric: tabular-nums;
   line-height: 1.1;
 }
@@ -148,21 +184,21 @@
 }
 
 .dashboard-kpi-badge.success {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
 }
 
 .dashboard-kpi-badge.info {
-  background-color: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
-  border: 1px solid rgba(59, 130, 246, 0.25);
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
 }
 
 .dashboard-kpi-badge.alert {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background-color: #fff1f2;
+  color: #b91c1c;
+  border: 1px solid #fecdd3;
 }
 
 .dashboard-kpi-footer {
@@ -173,13 +209,14 @@
 
 /* Pipeline Stage Funnel Bar */
 .dashboard-funnel-card {
-  background-color: #0b1120;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 1.15rem 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
 }
 
 .funnel-segments-track {
@@ -188,7 +225,8 @@
   width: 100%;
   border-radius: 9999px;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
 }
 
 .funnel-segment {
@@ -208,7 +246,7 @@
   align-items: center;
   gap: 0.45rem;
   font-size: 0.75rem;
-  color: #cbd5e1;
+  color: #334155;
 }
 
 .funnel-legend-dot {
@@ -226,13 +264,14 @@
 
 /* Priority Tasks & Recent Leads Lists */
 .dashboard-section-card {
-  background-color: #0b1120;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
 }
 
 .dashboard-section-header {
@@ -240,13 +279,13 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 0.65rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .dashboard-section-title {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
   margin: 0;
 }
 
@@ -262,19 +301,32 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.65rem 0.85rem;
-  background-color: #0d1527;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   gap: 0.75rem;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .priority-task-item:hover {
-  border-color: rgba(255, 255, 255, 0.14);
+  border-color: #cbd5e1;
+  background-color: #f1f5f9;
 }
 
 .priority-task-item.is-overdue {
   border-left: 3px solid #ef4444;
+  background: linear-gradient(90deg, #fff5f5 0%, #f8fafc 100%);
+}
+
+.overdue-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background-color: #fff1f2;
+  color: #b91c1c;
+  border: 1px solid #fecdd3;
 }
 
 /* Program Intake Progress Bar */
@@ -293,7 +345,8 @@
 .course-track-bar {
   height: 6px;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
   border-radius: 9999px;
   overflow: hidden;
 }

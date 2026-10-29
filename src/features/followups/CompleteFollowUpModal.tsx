@@ -83,7 +83,7 @@ const CompleteFollowUpModalInner: React.FC<Omit<CompleteFollowUpModalProps, 'isO
         {/* Header */}
         <div className="lead-modal-header">
           <div className="lead-modal-title-group">
-            <div className="lead-modal-icon-badge" style={{ backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#34d399' }}>
+            <div className="lead-modal-icon-badge" style={{ backgroundColor: '#dcfce7', color: '#15803d', border: '1px solid #bbf7d0' }}>
               <CheckCircle2 size={18} />
             </div>
             <div>
@@ -115,11 +115,11 @@ const CompleteFollowUpModalInner: React.FC<Omit<CompleteFollowUpModalProps, 'isO
             )}
 
             {/* Scheduled note reminder */}
-            <div style={{ backgroundColor: '#090d16', padding: '0.65rem 0.85rem', borderRadius: 6, border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ backgroundColor: '#f8fafc', padding: '0.65rem 0.85rem', borderRadius: 6, border: '1px solid #e2e8f0' }}>
               <span style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Original Agenda:
               </span>
-              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: '#cbd5e1' }}>
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: '#334155' }}>
                 "{scheduledNote}"
               </p>
             </div>

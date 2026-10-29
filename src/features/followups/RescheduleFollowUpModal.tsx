@@ -114,7 +114,7 @@ const RescheduleFollowUpModalInner: React.FC<Omit<RescheduleFollowUpModalProps, 
         {/* Header */}
         <div className="lead-modal-header">
           <div className="lead-modal-title-group">
-            <div className="lead-modal-icon-badge" style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24' }}>
+            <div className="lead-modal-icon-badge" style={{ backgroundColor: '#fef3c7', color: '#b45309', border: '1px solid #fde68a' }}>
               <Calendar size={18} />
             </div>
             <div>
@@ -146,11 +146,11 @@ const RescheduleFollowUpModalInner: React.FC<Omit<RescheduleFollowUpModalProps, 
             )}
 
             {/* Current schedule info */}
-            <div style={{ backgroundColor: '#090d16', padding: '0.65rem 0.85rem', borderRadius: 6, border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ backgroundColor: '#f8fafc', padding: '0.65rem 0.85rem', borderRadius: 6, border: '1px solid #e2e8f0' }}>
               <span style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Currently Scheduled For:
               </span>
-              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.825rem', color: '#f8fafc', fontWeight: 600 }}>
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.825rem', color: '#0f172a', fontWeight: 600 }}>
                 {new Date(currentDueAt).toLocaleString()}
               </p>
             </div>
@@ -188,7 +188,6 @@ const RescheduleFollowUpModalInner: React.FC<Omit<RescheduleFollowUpModalProps, 
                 value={newDueAt}
                 onChange={(e) => setNewDueAt(e.target.value)}
                 disabled={isSubmitting}
-                style={{ colorScheme: 'dark' }}
               />
             </div>
 

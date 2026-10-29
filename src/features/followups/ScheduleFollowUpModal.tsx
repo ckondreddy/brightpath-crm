@@ -161,7 +161,7 @@ const ScheduleFollowUpModalInner: React.FC<Omit<ScheduleFollowUpModalProps, 'isO
         {/* Header */}
         <div className="lead-modal-header">
           <div className="lead-modal-title-group">
-            <div className="lead-modal-icon-badge" style={{ backgroundColor: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa' }}>
+            <div className="lead-modal-icon-badge">
               <CalendarClock size={18} />
             </div>
             <div>
@@ -205,7 +205,7 @@ const ScheduleFollowUpModalInner: React.FC<Omit<ScheduleFollowUpModalProps, 'isO
                   className="lead-field-input"
                   value={preselectedLeadName || 'Current Student Lead'}
                   disabled
-                  style={{ backgroundColor: '#090d16', color: '#93c5fd' }}
+                  style={{ backgroundColor: '#f1f5f9', color: '#1e40af' }}
                 />
               ) : loadingLeads ? (
                 <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Loading student enquiries...</div>
@@ -259,7 +259,6 @@ const ScheduleFollowUpModalInner: React.FC<Omit<ScheduleFollowUpModalProps, 'isO
                 value={dueAt}
                 onChange={(e) => setDueAt(e.target.value)}
                 disabled={isSubmitting}
-                style={{ colorScheme: 'dark' }}
               />
             </div>
 

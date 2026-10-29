@@ -284,11 +284,11 @@ export const ReportsPage: React.FC = () => {
           gap: '0.75rem',
           flexWrap: 'wrap',
           fontSize: '0.8rem',
-          color: '#94a3b8',
+          color: '#475569',
         }}
       >
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
-          <Filter size={13} color="#60a5fa" />
+          <Filter size={13} color="#2563eb" />
           <span>Filters:</span>
         </span>
 
@@ -327,11 +327,11 @@ export const ReportsPage: React.FC = () => {
           <span
             style={{
               fontSize: '0.725rem',
-              color: '#cbd5e1',
-              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              color: '#334155',
+              backgroundColor: '#f1f5f9',
               padding: '0.2rem 0.5rem',
               borderRadius: '4px',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
+              border: '1px solid #e2e8f0',
             }}
           >
             Active Window: <strong>{data.dateRangeLabel}</strong> • {data.leadCount} Enquiries Included
