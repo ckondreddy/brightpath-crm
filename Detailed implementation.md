@@ -288,7 +288,13 @@ Every single feature milestone adheres to a strict continuous delivery progressi
 3. **Priority Action Queue & Course Intake Distribution**:
    - Priority queue listing overdue and today's callbacks chronologically with one-click direct call and lead dossier navigation.
    - Course intake breakdown showing relative demand across programs (e.g. *IIT-JEE Long Term*, *NEET Fastrack*, *Foundation*).
-4. **Real-Time Metric Reconciliation**:
+4. **Admissions Reports & Performance Intelligence Section**:
+   - Integrated [`DashboardReportsSection.tsx`](file:///c:/projects/brightpath-crm/src/features/dashboard/DashboardReportsSection.tsx) directly inside the executive Dashboard.
+   - Real-time conversion velocity, star counsellor, highest converting intake channel, and win/loss ratio.
+   - Channel attribution conversion progress bars.
+   - 1-click sanitized CSV exports (Full Leads, Enrolled Admissions) with instant toast notifications.
+   - Direct jump link to the full Admissions Analytics Suite.
+5. **Real-Time Metric Reconciliation**:
    - Aggregates metrics directly from Supabase tables on mount, keeping displayed numbers consistent with actual database state.
 
 ---
