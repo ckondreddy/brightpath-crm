@@ -25,8 +25,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requir
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'var(--color-obsidian-950)',
-          color: '#ffffff',
+          backgroundColor: '#f8fafc',
+          color: '#0f172a',
           gap: '1rem',
         }}
       >
